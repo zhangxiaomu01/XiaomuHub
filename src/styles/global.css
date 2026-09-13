@@ -369,6 +369,12 @@ a.tag:hover {
   border-top: 1px solid var(--color-border);
 }
 
+.comments-hint {
+  margin: 0 0 1rem;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
 /* ===== 视频（Vimeo 嵌入 + 外链） ===== */
 .video-wrapper {
   position: relative;

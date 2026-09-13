@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import Comments from '../../components/Comments.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);
@@ -32,10 +33,6 @@ const { title, description, pubDate, updatedDate, category, tags } = entry.data;
       <Content />
     </div>
 
-    <!-- TODO(阶段3): 在此处嵌入 Giscus 评论组件 -->
-    <div class="comments">
-      <h2>评论</h2>
-      <p>评论区建设中，即将接入 Giscus。</p>
-    </div>
+    <Comments />
   </article>
 </BaseLayout>
