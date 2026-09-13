@@ -110,13 +110,13 @@ XiaomuHub/
 
 **验收：** `npm run build` 生成 19 个静态页面 ✓；本地 10 条路由实测全部 200 ✓
 
-### 阶段 3：评论接入（Giscus）
+### 阶段 3：评论接入（Giscus） ✅（2026-09-13 完成）
 
-- [ ] 本仓库开启 GitHub Discussions 功能
-- [ ] 在 [giscus.app](https://giscus.app/zh-CN) 生成配置（仓库、映射方式、主题）
-- [ ] 文章详情页嵌入 Giscus 组件（本地先放占位，部署后才能真正评论）
+- [x] 仓库开启 GitHub Discussions，安装 giscus App，评论分类：Announcements（仅维护者可发帖，访客可评论/回复）
+- [x] giscus 配置：pathname 映射、中文界面、light 主题、懒加载（配置内嵌于 `src/components/Comments.astro`）
+- [x] 博客文章详情页嵌入评论组件（评论数据存于本仓库 Discussions，零运维）
 
-**验收：** 本地文章页出现评论区占位/组件，无报错。
+**验收：** 线上文章页（如 `/blog/hello-new-site/`）已嵌入 giscus ✓；实际评论需浏览器登录 GitHub 验证（评论将出现在仓库 Discussions 的 Announcements 分类下）
 
 ### 阶段 4：自动部署上线（公网 IP 访问） ✅（2026-09-13 完成）
 
