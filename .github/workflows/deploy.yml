@@ -41,6 +41,6 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keygen -lf ~/.ssh/deploy_key
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
-          rsync -az --delete dist/ "ubuntu@$HOST:/var/www/xiaomuhub/"
+          rsync -az --delete -e "ssh -i ~/.ssh/deploy_key" dist/ "ubuntu@$HOST:/var/www/xiaomuhub/"
           ssh -i ~/.ssh/deploy_key "ubuntu@$HOST" "sudo systemctl reload nginx || true"
           echo "Deployed to http://$HOST"
