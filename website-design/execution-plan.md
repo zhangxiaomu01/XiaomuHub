@@ -118,15 +118,21 @@ XiaomuHub/
 
 **验收：** 本地文章页出现评论区占位/组件，无报错。
 
-### 阶段 4：自动部署上线（公网 IP 访问）
+### 阶段 4：自动部署上线（公网 IP 访问） ✅（2026-09-13 完成）
 
-- [ ] GitHub 创建远程仓库并 push 本地代码
-- [ ] 服务器准备：创建部署目录 `/var/www/xiaomuhub`，Nginx 配置站点根目录、gzip、静态资源缓存头
-- [ ] GitHub Secrets 配置：服务器 IP、SSH 私钥、部署路径
-- [ ] 编写 Actions workflow：`astro build` → rsync/scp 同步 `dist/` 到服务器
-- [ ] push 触发部署，Nginx 重载
+- [x] GitHub 远程仓库 `zhangxiaomu01/XiaomuHub`（Public，Giscus 依赖公开仓库）已建立并推送全部代码
+- [x] 服务器：部署目录 `/var/www/xiaomuhub`；Nginx 站点配置（gzip、`/_astro/` 永久缓存、`/images/` 7 天缓存、安全头），配置副本存档于 `website-design/nginx/xiaomuhub.conf`
+- [x] CI 专用部署密钥 `~/.ssh/xiaomuhub_deploy`（与个人密钥分离，便于吊销）；GitHub Secrets：`SERVER_HOST` + `SERVER_SSH_KEY`（私钥单行 base64，杜绝多行粘贴损坏）
+- [x] Actions workflow（`.github/workflows/deploy.yml`）：push main / 手动触发 → npm ci → astro build → rsync（含密钥指纹日志）→ reload nginx，并发去重
+- [x] push 触发部署实测通过，公网验收 200
 
-**验收：** `git push` 后约 1–2 分钟，`http://<公网IP>` 更新为最新站点；Giscus 评论可正常使用。
+**过程中解决的坑（备忘）：**
+1. runner 无 `~/.ssh` 目录 → 重定向失败（workflow 内 `mkdir -p ~/.ssh`）
+2. rsync 未指定 `-e "ssh -i ..."` → 空手握手被拒（低级失误，日志指纹验证钥匙本身是好的）
+3. 本地 `github.com:443` 间歇阻断 → 配置 `~/.ssh/config` 走 `ssh.github.com:443` SSH 通道推送，稳定
+4. 多行私钥经剪贴板粘贴易损坏 → Secret 改存单行 base64（workflow 内解码）
+
+**验收：** `git push` 后约 3 分钟（构建 ~1.5 分钟 + 约 50MB 产物按服务器 6M 入口带宽同步 ~1.5 分钟），`http://49.235.136.237` 自动更新 ✓（Giscus 评论待阶段 3 接入）
 
 ### 阶段 5：域名 + HTTPS
 
