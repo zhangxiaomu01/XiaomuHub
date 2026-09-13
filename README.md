@@ -1,2 +1,2 @@
 # XiaomuHub
-This is the repo for my own blog.
+This is the repo for my own web site.
