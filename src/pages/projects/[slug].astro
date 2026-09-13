@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+  return projects.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, period, date, tags, github, demo, video } = entry.data;
+---
+
+<BaseLayout title={`${title} · 项目 · XiaomuHub`} description={description}>
+  <article>
+    <div class="page-header">
+      <h1>{title}</h1>
+      <div class="meta">
+        <FormattedDate date={date} />
+        {period && <span>· {period}</span>}
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+      {description && <p class="page-description">{description}</p>}
+      <div class="meta">
+        {github && <a href={github} target="_blank" rel="noopener">源码 GitHub ↗</a>}
+        {demo && <a href={demo} target="_blank" rel="noopener">在线演示 ↗</a>}
+        {video && <a href={video} target="_blank" rel="noopener">视频介绍 ↗</a>}
+      </div>
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>

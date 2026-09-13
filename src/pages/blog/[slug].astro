@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, pubDate, updatedDate, category, tags } = entry.data;
+---
+
+<BaseLayout title={`${title} · 博客 · XiaomuHub`} description={description}>
+  <article>
+    <div class="page-header">
+      <h1>{title}</h1>
+      <div class="meta">
+        <FormattedDate date={pubDate} />
+        <span>· {category}</span>
+        {tags.map((tag) => <span class="tag">{tag}</span>)}
+      </div>
+      {description && <p class="page-description">{description}</p>}
+    </div>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <!-- TODO(阶段3): 在此处嵌入 Giscus 评论组件 -->
+    <div class="comments">
+      <h2>评论</h2>
+      <p>评论区建设中，即将接入 Giscus。</p>
+    </div>
+  </article>
+</BaseLayout>

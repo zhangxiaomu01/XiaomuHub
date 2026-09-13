@@ -84,15 +84,15 @@ XiaomuHub/
 
 远程连接服务器：ssh ubuntu@49.235.136.237
 
-### 阶段 1：站点骨架搭建
+### 阶段 1：站点骨架搭建 ✅（2026-09-13 完成）
 
-- [ ] `npm create astro@latest` 初始化项目（根目录即本仓库）
-- [ ] 建立目录结构（见第 5 节）
-- [ ] 定义内容集合：`blog`（title/date/tags/category/draft 等字段）、`projects`（name/date/tags/links/cover 等字段）
-- [ ] 实现基础布局与页面：首页、项目列表/详情、博客列表/详情、关于
-- [ ] 移动端适配（响应式）
+- [x] 初始化 Astro 项目（根目录即本仓库）— Astro 5.18.2，手写最小化脚手架（package.json / astro.config.mjs / tsconfig）
+- [x] 建立目录结构（见第 5 节）
+- [x] 定义内容集合：`blog`（title/description/pubDate/category/tags/draft）、`projects`（title/description/period/date/cover/links/featured/draft），Zod schema 校验
+- [x] 实现基础布局与页面：首页（Hero+精选项目+最新文章）、项目列表/详情、博客列表/详情（含评论占位）、关于（时间线+技能+联系方式）
+- [x] 移动端适配（响应式，640px 断点）
 
-**验收：** `npm run dev` 本地 `localhost:4321` 可完整浏览所有页面（用测试数据）。
+**验收：** `npm run build` 生成 11 个静态页面 ✓；`npm run dev` 本地 4321 端口 6 条路由实测全部 200 ✓
 
 ### 阶段 2：内容填充与精选迁移
 
