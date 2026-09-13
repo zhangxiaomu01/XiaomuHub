@@ -1,41 +1,57 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import BlogCard from '../components/BlogCard.astro';
 
-const projects = (await getCollection('projects', ({ data }) => !data.draft))
-  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured)
-    || b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+// 首页对齐旧站 Home：完整展示精选（近期）项目，旧项目在 /projects/
+const featured = (await getCollection('projects', ({ data }) => !data.draft && data.featured))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+const rendered = await Promise.all(
+  featured.map(async (entry) => ({ entry, Content: (await render(entry)).Content })),
+);
 ---
 
 <BaseLayout title="XiaomuHub · 张小木的个人网站">
   <section class="hero">
     <h1>你好，我是张小木（Jun Zhang）</h1>
     <p>
-      计算机图形学背景的开发者，热衷于 3D 建模、渲染技术与编程创作。
-      这里记录我的项目作品、技术笔记，以及一些生活里的想法。
+      欢迎来到我的网站。过去几年里，我一直在计算机图形学的方向上深耕：3D 建模、贴图、Python 工具链与图形渲染，
+      也熟悉 C++ 编程和 OpenGL 相关技术；目前正在学习 OpenGL/Vulkan 方面更进阶的内容。
+      这里展示我的项目作品，也记录一些技术笔记与生活里的想法。
     </p>
   </section>
 
   <section>
-    <div class="section-title">
-      <h2>精选项目</h2>
-      <a href="/projects/">全部项目 →</a>
-    </div>
-    {projects.map((project) => <ProjectCard project={project} />)}
-  </section>
+    <h2 class="home-overview-title">项目总览（Projects Overview）</h2>
+    <p class="home-overview-intro">以下是我近年来完成的项目，点击标题可查看完整介绍：</p>
 
-  <section>
-    <div class="section-title">
-      <h2>最新文章</h2>
-      <a href="/blog/">全部文章 →</a>
+    {
+      rendered.map(({ entry, Content }) => (
+        <article class="home-project">
+          <h3>
+            <a href={`/projects/${entry.id}/`}>{entry.data.title}</a>
+          </h3>
+          <div class="meta">
+            {entry.data.period && <span>{entry.data.period}</span>}
+            {entry.data.tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </div>
+          <div class="prose">
+            <Content />
+          </div>
+        </article>
+      ))
+    }
+
+    <div class="home-links">
+      <p>
+        📦 想了解我更早的项目与公司作品，请移步
+        <a href="/projects/">全部项目</a>；
+        🎨 我的个人数字艺术作品收录在
+        <a href="/blog/gallery/">数字艺术作品集</a>
+        ；✍️ 技术与生活随笔见 <a href="/blog/">博客</a>。
+      </p>
     </div>
-    {posts.map((post) => <BlogCard post={post} />)}
   </section>
 </BaseLayout>

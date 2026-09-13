@@ -3,7 +3,7 @@ title: 'Planetary Landscape Generation（程序化行星地形生成）'
 description: '个人项目：用 C++/OpenGL/GLSL 实现自适应 LOD 的程序化行星地形生成。'
 date: 2018-12-01
 period: '2018 秋'
-category: 'Projects'
+category: '游戏与互动媒体'
 tags: ['C++', 'OpenGL', 'GLSL', '程序化生成']
 featured: true
 ---
@@ -18,3 +18,5 @@ featured: true
 - **底层细分**：利用 OpenGL 的曲面细分（Tessellation）特性，把基础球面进一步划分为极小的子三角形，为地形提供高分辨率细节
 
 两者结合，近处山脊清晰、远处轮廓完整，同时保持可接受的性能开销。
+
+> 注：原演示动图（LOD 细分过程演示）体积较大，待压缩处理后补充。

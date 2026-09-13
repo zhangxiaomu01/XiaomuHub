@@ -2,14 +2,21 @@
 import '../styles/global.css';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  // Markdown 页面（src/pages/*.md）会传入 frontmatter
+  frontmatter?: { title?: string; description?: string };
 }
 
+const props = Astro.props;
 const {
-  title,
+  title = 'XiaomuHub',
   description = '张小木（Jun Zhang）的个人网站：项目作品、技术博客与生活想法',
-} = Astro.props;
+} = {
+    title: props.frontmatter?.title ?? props.title,
+    description: props.frontmatter?.description ?? props.description,
+  };
+const isMarkdownPage = !!props.frontmatter;
 
 const navItems = [
   { href: '/', label: '首页' },
@@ -51,7 +58,7 @@ const isActive = (href: string) =>
 
     <main>
       <div class="container">
-        <slot />
+        {isMarkdownPage ? <div class="page-header"><h1>{title}</h1></div><div class="prose"><slot /></div> : <slot />}
       </div>
     </main>
 

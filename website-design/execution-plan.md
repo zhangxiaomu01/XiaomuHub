@@ -94,15 +94,20 @@ XiaomuHub/
 
 **验收：** `npm run build` 生成 11 个静态页面 ✓；`npm run dev` 本地 4321 端口 6 条路由实测全部 200 ✓
 
-### 阶段 2：内容填充与精选迁移
+### 阶段 2：内容填充与精选迁移 ✅（2026-09-13 完成）
 
-- [ ] 整理精选内容清单：旧站中值得迁移的项目（如 CryoVR、Planetary Landscape、Underwater Rendering 等）与文章
-- [ ] 从旧站手动复制文字、保存图片（旧站仍在线，直接访问复制即可）
-- [ ] 图片处理：压缩 + 转 WebP，控制体积
-- [ ] 撰写 `about` 页：工作经历时间线
-- [ ] 新写 1–2 篇文章，验证写作流程
+迁移范围（用户指定）：旧站 Home / Projects / Photography / Art Gallery / About Me
 
-**验收：** 本地站点内容完整、图片加载流畅。
+- [x] 旧站 5 个页面全部抓取（含隐藏在画廊里的图片 URL 与 Vimeo 视频清单）
+- [x] 下载 44 张原图（83MB）到 `src/assets/`，构建时自动压缩为 WebP（最大断点 1668px，单图最大约 1.5MB，懒加载）
+- [x] 首页对齐旧站 Home：Hero 介绍 + 精选项目完整展示（Project Overview 结构，新项目设 `featured: true` 即上首页）
+- [x] /projects/ 按旧站结构分组：研究项目 → 游戏与互动媒体 → 公司作品（含 Qingty 公司介绍）；共 9 个项目
+- [x] Photography（Minerals / Macrophotography 两篇）并入博客"摄影"分类；Art Gallery 做成独立文档页 `/blog/gallery/`（9 幅作品）
+- [x] About Me 迁译到关于页（去掉过时的求职文字，"至今"一栏留空待用户填写；补充 Qingty 经历）
+- [x] 内容全部翻译为中文（技术名词/项目名保留英文）；Vimeo 视频采用"嵌入 + 外链"方案（国内打不开播放器时可点链接）
+- [ ] **遗留项**：行星项目的 LOD 演示 GIF（21MB）未迁移——需压缩为视频后补充；关于页"至今"一栏待用户填写
+
+**验收：** `npm run build` 生成 19 个静态页面 ✓；本地 10 条路由实测全部 200 ✓
 
 ### 阶段 3：评论接入（Giscus）
 

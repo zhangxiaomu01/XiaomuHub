@@ -3,12 +3,17 @@ title: 'CryoVR'
 description: '基于 Unreal Engine 4 的冷冻电镜（Cryo-EM）操作训练模拟器：面向结构生物学背景学生的 VR 培训系统。'
 date: 2019-05-01
 period: '2018 – 2019'
-category: 'Projects'
+category: '研究项目'
 tags: ['UE4', 'VR', '教育']
 featured: true
 ---
 
 一个研究型项目，目标是做出有效的训练模拟器，帮助结构生物学背景的学生学习使用 Cryo-EM（冷冻电子显微镜）技术。基于 **Unreal Engine 4** 开发。
+
+## 项目演示
+
+<div class="video-wrapper"><iframe src="https://player.vimeo.com/video/248614799" title="CryoVR Project Overview" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-link">▶ 国内可能无法加载 Vimeo 播放器，<a href="https://vimeo.com/248614799" target="_blank" rel="noopener">点此在 Vimeo 观看原视频</a></p>
 
 ## 我的工作
 

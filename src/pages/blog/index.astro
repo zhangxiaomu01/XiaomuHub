@@ -7,10 +7,16 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<BaseLayout title="博客 · XiaomuHub" description="张小木的技术笔记与生活想法">
+<BaseLayout title="博客 · XiaomuHub" description="张小木的技术笔记、摄影与生活想法">
   <div class="page-header">
     <h1>博客</h1>
     <p class="page-description">技术笔记、创作记录，以及一些生活里的想法。</p>
   </div>
+
+  <article class="card gallery-entry">
+    <h3><a href="/blog/gallery/">🎨 数字艺术作品集（Art Gallery）</a></h3>
+    <p>9 幅 MentalRay 渲染创作：从概念到成图全部独立完成。</p>
+  </article>
+
   {posts.map((post) => <BlogCard post={post} />)}
 </BaseLayout>

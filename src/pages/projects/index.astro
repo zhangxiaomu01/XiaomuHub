@@ -3,15 +3,40 @@ import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 
+// 分组顺序与旧站 /projects/ 页一致：研究项目 → 游戏与互动媒体 → 公司作品
+const groupOrder = ['研究项目', '游戏与互动媒体', '公司作品'];
+
 const projects = (await getCollection('projects', ({ data }) => !data.draft))
-  .sort((a, b) => Number(b.data.featured) - Number(a.data.featured)
-    || b.data.date.valueOf() - a.data.date.valueOf());
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const groups = groupOrder.map((name) => ({
+  name,
+  projects: projects.filter((p) => p.data.category === name),
+}));
+
+const groupIntros: Record<string, string> = {
+  公司作品:
+    '毕业后我在 Qingty（青岛一家提供 3D 实时面部建模、人体扫描等图形产品的创业公司）工作了两年半（2014.7 – 2017.2），担任图形设计师：主要工作是编写 Python 脚本提升 Maya 效率、为公司人体扫描系统制作并改进模型，以及为 Sanstone App 制作 3D 模板。',
+};
 ---
 
-<BaseLayout title="项目 · XiaomuHub" description="张小木的项目作品集">
+<BaseLayout title="项目 · XiaomuHub" description="张小木的项目作品集：研究项目、游戏与互动媒体、公司作品">
   <div class="page-header">
     <h1>项目</h1>
-    <p class="page-description">我做过的一些有趣的东西：图形渲染、VR 训练模拟、程序化生成等。</p>
+    <p class="page-description">我做过的一些东西：图形渲染、VR 训练模拟、程序化生成、商业图形产品等。</p>
   </div>
-  {projects.map((project) => <ProjectCard project={project} />)}
+
+  {
+    groups
+      .filter((g) => g.projects.length > 0)
+      .map((group) => (
+        <section>
+          <h2 class="group-title">{group.name}</h2>
+          {groupIntros[group.name] && <p class="group-intro">{groupIntros[group.name]}</p>}
+          {group.projects.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </section>
+      ))
+  }
 </BaseLayout>
