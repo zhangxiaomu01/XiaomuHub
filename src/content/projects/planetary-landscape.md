@@ -19,4 +19,6 @@ featured: true
 
 两者结合，近处山脊清晰、远处轮廓完整，同时保持可接受的性能开销。
 
-> 注：原演示动图（LOD 细分过程演示）体积较大，待压缩处理后补充。
+<img src="/images/lod.webp" alt="行星 LOD 细分过程演示" loading="lazy" />
+
+*LOD 细分过程演示：相机靠近时网格逐级细分*

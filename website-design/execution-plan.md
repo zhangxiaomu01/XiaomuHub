@@ -105,7 +105,8 @@ XiaomuHub/
 - [x] Photography（Minerals / Macrophotography 两篇）并入博客"摄影"分类；Art Gallery 做成独立文档页 `/blog/gallery/`（9 幅作品）
 - [x] About Me 迁译到关于页（去掉过时的求职文字，"至今"一栏留空待用户填写；补充 Qingty 经历）
 - [x] 内容全部翻译为中文（技术名词/项目名保留英文）；Vimeo 视频采用"嵌入 + 外链"方案（国内打不开播放器时可点链接）
-- [ ] **遗留项**：行星项目的 LOD 演示 GIF（21MB）未迁移——需压缩为视频后补充；关于页"至今"一栏待用户填写
+- [x] 遗留项处理：行星项目 LOD 演示动图已压缩为动态 WebP（21MB GIF → 3.4MB，600px/87 帧，`public/images/lod.webp`，懒加载）
+- [ ] **遗留项**：关于页"至今"一栏待用户填写
 
 **验收：** `npm run build` 生成 19 个静态页面 ✓；本地 10 条路由实测全部 200 ✓
 
