@@ -34,16 +34,10 @@ jobs:
           SSH_KEY: ${{ secrets.SERVER_SSH_KEY }}
           HOST: ${{ secrets.SERVER_HOST }}
         run: |
+          mkdir -p ~/.ssh && chmod 700 ~/.ssh
           HOST=$(echo "$HOST" | tr -d '[:space:]')
           printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          # --- 临时诊断（TODO: 排查完成后删除）---
-          echo "HOST=[$HOST]"
-          echo "SSH_KEY 行数: $(printf '%s' "$SSH_KEY" | wc -l), 字节数: $(printf '%s' "$SSH_KEY" | wc -c)"
-          echo "首行: $(printf '%s' "$SSH_KEY" | head -n 1)"
-          echo "末行: $(printf '%s' "$SSH_KEY" | tail -n 1)"
-          ssh-keygen -lf ~/.ssh/deploy_key || echo "ssh-keygen 校验私钥失败"
-          # --- 诊断结束 ---
           ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts 2>/dev/null
           rsync -az --delete dist/ "ubuntu@$HOST:/var/www/xiaomuhub/"
           ssh -i ~/.ssh/deploy_key "ubuntu@$HOST" "sudo systemctl reload nginx || true"
