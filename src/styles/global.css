@@ -605,9 +605,14 @@ a.tag:hover {
   color: var(--color-text-muted);
 }
 
-.floating-menu__more {
-  display: inline-block;
+.floating-menu__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   margin-top: 0.6rem;
+}
+
+.floating-menu__more {
   font-size: 0.85rem;
 }
 

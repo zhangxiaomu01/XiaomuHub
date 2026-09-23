@@ -56,7 +56,10 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
         }
       </ul>
 
-      <a class="floating-menu__more" href="/blog/">全部文章 →</a>
+      <div class="floating-menu__links">
+        <a class="floating-menu__more" href="/blog/">全部文章 →</a>
+        <a class="floating-menu__more" href="/">返回首页 →</a>
+      </div>
     </div>
   </div>
 </div>
