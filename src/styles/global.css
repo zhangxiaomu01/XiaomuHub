@@ -387,6 +387,41 @@ a.tag:hover {
   font-size: 0.925rem;
 }
 
+/* 时间线内嵌子列表（工作经历要点） */
+.timeline-detail {
+  list-style: disc;
+  margin: 0.5rem 0 0;
+  padding-left: 1.5rem;
+}
+
+.timeline-detail li {
+  position: static;
+  padding: 0 0 0.25rem 0;
+  border-left: none;
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+}
+
+.timeline-detail li::before {
+  content: none;
+}
+
+/* 发表列表 */
+.pub-list {
+  padding-left: 1.5rem;
+}
+
+.pub-list li {
+  margin-bottom: 0.85rem;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.pub-list em {
+  font-style: italic;
+}
+
 /* ===== 评论区占位 ===== */
 .comments {
   margin-top: 2.5rem;
