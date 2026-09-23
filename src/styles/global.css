@@ -134,6 +134,17 @@ img {
   font-size: 0.875rem;
 }
 
+/* ===== 关于页：个人全身照右浮动，文字环绕（仿旧站 About Me） ===== */
+.prose img.about-portrait {
+  float: right;
+  width: 240px;
+  height: auto;
+  margin: 0.25rem 0 1rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 14px rgba(31, 35, 40, 0.12);
+}
+
 /* ===== 首页 Hero ===== */
 .hero h1 {
   font-size: 2rem;
@@ -649,6 +660,17 @@ a.tag:hover {
 
   .site-nav a {
     font-size: 0.9rem;
+  }
+}
+
+/* 窄屏下列空间不足以环绕，全身照改为居中独占一行 */
+@media (max-width: 560px) {
+  .prose img.about-portrait {
+    float: none;
+    display: block;
+    width: 100%;
+    max-width: 22rem;
+    margin: 0 auto 1.25rem;
   }
 }
 

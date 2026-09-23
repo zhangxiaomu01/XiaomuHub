@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import portrait from '../assets/about-portrait.jpg';
 ---
 
 <BaseLayout title="关于 · XiaomuHub" description="关于张小木：图形学背景、工作经历、技能与联系方式">
@@ -7,7 +9,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <h1>关于我</h1>
   </div>
 
-  <div class="prose">
+  <div class="prose about-intro">
+    <Image
+      class="about-portrait"
+      src={portrait}
+      alt="张小木在滑雪场的全身照：脚踩滑雪板、手持雪杖"
+      width={480}
+      widths={[360, 480]}
+      sizes="(max-width: 560px) calc(100vw - 2.5rem), 240px"
+      loading="lazy"
+    />
     <p>
       谢谢你访问我的个人网站。我是张小木（Jun Zhang），计算机图形学背景的开发者。
       我热衷于解决棘手的问题，喜欢为美术和动画师设计工具来提升他们的效率；
