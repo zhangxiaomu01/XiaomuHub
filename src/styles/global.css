@@ -129,7 +129,7 @@ img {
 /* ===== 页脚 ===== */
 .site-footer {
   border-top: 1px solid var(--color-border);
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 4.5rem;
   color: var(--color-text-muted);
   font-size: 0.875rem;
 }
@@ -412,6 +412,159 @@ a.tag:hover {
   margin: 0 0 1rem;
 }
 
+/* ===== 悬浮菜单（右下角按钮，点击展开近期文章/搜索） ===== */
+.floating-menu {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 100;
+}
+
+.floating-menu__fab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--color-border);
+  border-radius: 50%;
+  background: var(--color-bg-subtle);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(31, 35, 40, 0.12);
+  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.floating-menu__fab:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+.is-open .floating-menu__fab {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+  transform: scale(0.92);
+}
+
+.floating-menu__panel {
+  position: absolute;
+  right: 0;
+  bottom: calc(3rem + 0.75rem);
+  width: 18rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 32px rgba(31, 35, 40, 0.16);
+  overflow: hidden;
+  animation: floating-menu-pop 0.15s ease;
+}
+
+@keyframes floating-menu-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating-menu__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.floating-menu__close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  border: none;
+  border-radius: 6px;
+  background: none;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.floating-menu__close:hover {
+  background: var(--color-bg-subtle);
+  color: var(--color-text);
+}
+
+.floating-menu__body {
+  padding: 0.9rem;
+}
+
+.floating-menu__search input {
+  width: 100%;
+  padding: 0.4rem 0.65rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--color-text);
+  background: var(--color-bg-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  outline: none;
+}
+
+.floating-menu__search input:focus {
+  border-color: var(--color-accent);
+  background: var(--color-bg);
+}
+
+.floating-menu__posts {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+}
+
+.floating-menu__posts li {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.floating-menu__posts li:last-child {
+  border-bottom: none;
+}
+
+.floating-menu__posts a {
+  color: var(--color-text);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.floating-menu__posts a:hover {
+  color: var(--color-accent);
+}
+
+.floating-menu__posts time {
+  font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.floating-menu__more {
+  display: inline-block;
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+}
+
 /* ===== 首页项目总览 ===== */
 .home-overview-title {
   font-size: 1.4rem;
@@ -496,5 +649,17 @@ a.tag:hover {
 
   .site-nav a {
     font-size: 0.9rem;
+  }
+}
+
+/* 窄屏下悬浮面板宽度贴近屏幕两侧留白 */
+@media (max-width: 480px) {
+  .floating-menu {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .floating-menu__panel {
+    width: calc(100vw - 2rem);
   }
 }

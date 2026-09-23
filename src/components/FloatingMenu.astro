@@ -1,0 +1,93 @@
+---
+import { getCollection } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+// 全站悬浮菜单：近期文章（默认收起，点击按钮展开）
+const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+
+<div class="floating-menu" data-floating-menu>
+  <button
+    type="button"
+    class="floating-menu__fab"
+    data-floating-menu-toggle
+    aria-expanded="false"
+    aria-controls="floating-menu-panel"
+    aria-label="近期文章"
+    title="近期文章"
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0V7" />
+      <path d="M18 14h-8" />
+      <path d="M15 18h-5" />
+      <path d="M10 6h8v4h-8z" />
+    </svg>
+  </button>
+
+  <div class="floating-menu__panel" id="floating-menu-panel" hidden>
+    <div class="floating-menu__header">
+      <span>近期文章</span>
+      <button
+        type="button"
+        class="floating-menu__close"
+        data-floating-menu-close
+        aria-label="关闭"
+      >
+        ×
+      </button>
+    </div>
+
+    <div class="floating-menu__body">
+      {/* 阶段 6 接入 Pagefind 全文搜索时替换为其预置的搜索 UI */}
+      <div class="floating-menu__search">
+        <input type="search" placeholder="搜索文章…" aria-label="搜索文章" />
+      </div>
+
+      <ul class="floating-menu__posts">
+        {
+          recentPosts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              <FormattedDate date={post.data.pubDate} />
+            </li>
+          ))
+        }
+      </ul>
+
+      <a class="floating-menu__more" href="/blog/">全部文章 →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const menu = document.querySelector<HTMLElement>('[data-floating-menu]');
+  const toggle = document.querySelector<HTMLButtonElement>('[data-floating-menu-toggle]');
+  const closeBtn = document.querySelector<HTMLButtonElement>('[data-floating-menu-close]');
+  const panel = document.getElementById('floating-menu-panel');
+
+  if (menu && toggle && panel) {
+    const setOpen = (open: boolean) => {
+      panel.hidden = !open;
+      menu.classList.toggle('is-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(panel.hidden);
+    });
+
+    closeBtn?.addEventListener('click', () => setOpen(false));
+
+    // 点击面板外部关闭
+    document.addEventListener('click', (event) => {
+      if (!menu.contains(event.target as Node)) setOpen(false);
+    });
+
+    // Esc 关闭
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !panel.hidden) setOpen(false);
+    });
+  }
+</script>

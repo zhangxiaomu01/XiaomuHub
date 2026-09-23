@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { Image } from 'astro:assets';
 import bannerImage from '../assets/gallery/42.jpg';
+import FloatingMenu from '../components/FloatingMenu.astro';
 
 interface Props {
   title?: string;
@@ -82,5 +83,7 @@ const isActive = (href: string) =>
         驱动
       </div>
     </footer>
+
+    <FloatingMenu />
   </body>
 </html>
