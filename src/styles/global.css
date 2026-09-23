@@ -68,6 +68,20 @@ img {
   height: auto;
 }
 
+/* ===== 顶部 Banner（仿旧站页首图：与正文同宽居中，导航栏位于其下方） ===== */
+.site-banner {
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.site-banner img {
+  display: block;
+  width: 100%;
+  height: clamp(180px, 36vh, 420px);
+  object-fit: cover;
+  object-position: center;
+}
+
 /* ===== 页头 ===== */
 .site-header {
   border-bottom: 1px solid var(--color-border);

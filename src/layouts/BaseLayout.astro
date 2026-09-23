@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css';
+import { Image } from 'astro:assets';
+import bannerImage from '../assets/gallery/42.jpg';
 
 interface Props {
   title?: string;
@@ -41,6 +43,17 @@ const isActive = (href: string) =>
     <title>{title}</title>
   </head>
   <body>
+    <div class="site-banner container">
+      <Image
+        src={bannerImage}
+        alt="俯拍书桌：暖光下的彩色文具、手写便笺与手绘画册"
+        widths={[640, 828, 1080]}
+        sizes="(min-width: 780px) 740px, calc(100vw - 2.5rem)"
+        loading="eager"
+        fetchpriority="high"
+      />
+    </div>
+
     <header class="site-header">
       <div class="container header-inner">
         <a class="site-brand" href="/">XiaomuHub</a>
