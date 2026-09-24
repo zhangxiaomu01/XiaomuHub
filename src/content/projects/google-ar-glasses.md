@@ -3,7 +3,7 @@ title: 'Google AR 眼镜（实时翻译与转录）'
 description: '作为AR眼镜项目的核心成员。主要负责AR眼镜的实时翻译与转录功能。'
 date: 2023-12-15
 period: '2021 - 2024'
-category: '游戏与互动媒体'
+category: 'AR眼镜'
 tags: ['AR', '翻译', '转录', 'Google AR devices', 'Java', 'Kotlin']
 featured: true
 ---
