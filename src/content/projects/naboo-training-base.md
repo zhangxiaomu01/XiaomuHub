@@ -5,7 +5,7 @@ date: 2017-12-15
 period: '2017.10 – 2017.12'
 category: '游戏与互动媒体'
 tags: ['UE4', 'VR', '游戏', 'AI']
-featured: true
+featured: false
 ---
 
 "Naboo Training Base" 是一款虚拟现实游戏，目标是做出快节奏的第一人称动作体验（基于 Unreal Engine 4）。
