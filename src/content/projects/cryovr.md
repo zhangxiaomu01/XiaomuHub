@@ -12,8 +12,11 @@ featured: true
 
 ## 项目演示
 
-<div class="video-wrapper"><iframe src="https://player.vimeo.com/video/248614799" title="CryoVR Project Overview" loading="lazy" allowfullscreen></iframe></div>
-<p class="video-link">▶ 国内可能无法加载 Vimeo 播放器，<a href="https://vimeo.com/248614799" target="_blank" rel="noopener">点此在 Vimeo 观看原视频</a></p>
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/EStffnRA1R4?start=2" title="CryoVR Project Overview" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-link">▶ 国内可能无法加载 YouTube 播放器，<a href="https://www.youtube.com/watch?v=EStffnRA1R4" target="_blank" rel="noopener">点此在 YouTube 观看原视频</a></p>
+
+<div class="video-wrapper"><iframe src="https://www.youtube.com/embed/WKPzUciN0CU" title="CryoVR Demo" loading="lazy" allowfullscreen></iframe></div>
+<p class="video-link">▶ 国内可能无法加载 YouTube 播放器，<a href="https://www.youtube.com/watch?v=WKPzUciN0CU" target="_blank" rel="noopener">点此在 YouTube 观看原视频</a></p>
 
 ## 我的工作
 
