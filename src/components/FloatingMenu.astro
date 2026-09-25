@@ -2,10 +2,22 @@
 import { getCollection } from 'astro:content';
 import FormattedDate from './FormattedDate.astro';
 
-// 全站悬浮菜单：近期文章（默认收起，点击按钮展开）
-const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .slice(0, 3);
+// 全站悬浮菜单：近期文章 + 关键词搜索（标题/标签）
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const recentPosts = allPosts.slice(0, 3);
+
+// 搜索索引：内联到页面，客户端按标题/标签过滤
+const searchIndex = allPosts.map((post) => ({
+  title: post.data.title,
+  url: `/blog/${post.id}/`,
+  tags: post.data.tags,
+  dateLabel: post.data.pubDate.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }),
+}));
 ---
 
 <div class="floating-menu" data-floating-menu>
@@ -40,12 +52,18 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     </div>
 
     <div class="floating-menu__body">
-      {/* 阶段 6 接入 Pagefind 全文搜索时替换为其预置的搜索 UI */}
+      <script type="application/json" id="floating-menu-index" set:html={JSON.stringify(searchIndex).replace(/</g, '\\u003c')} />
+
       <div class="floating-menu__search">
-        <input type="search" placeholder="搜索文章…" aria-label="搜索文章" />
+        <input
+          type="search"
+          placeholder="搜索文章（标题/标签）…"
+          aria-label="搜索文章"
+          data-floating-menu-search
+        />
       </div>
 
-      <ul class="floating-menu__posts">
+      <ul class="floating-menu__posts" data-floating-menu-posts>
         {
           recentPosts.map((post) => (
             <li>
@@ -69,6 +87,9 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
   const toggle = document.querySelector<HTMLButtonElement>('[data-floating-menu-toggle]');
   const closeBtn = document.querySelector<HTMLButtonElement>('[data-floating-menu-close]');
   const panel = document.getElementById('floating-menu-panel');
+  const searchInput = document.querySelector<HTMLInputElement>('[data-floating-menu-search]');
+  const postsList = document.querySelector<HTMLUListElement>('[data-floating-menu-posts]');
+  const indexEl = document.getElementById('floating-menu-index');
 
   if (menu && toggle && panel) {
     const setOpen = (open: boolean) => {
@@ -91,6 +112,57 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     // Esc 关闭
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && !panel.hidden) setOpen(false);
+    });
+  }
+
+  // 关键词搜索：按标题/标签过滤，清空恢复近期文章列表
+  if (searchInput && postsList && indexEl) {
+    type Post = { title: string; url: string; tags: string[]; dateLabel: string };
+    let posts: Post[] = [];
+    try {
+      posts = JSON.parse(indexEl.textContent ?? '[]');
+    } catch {
+      posts = [];
+    }
+    const initialHtml = postsList.innerHTML;
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim().toLowerCase();
+
+      if (!query) {
+        postsList.innerHTML = initialHtml;
+        return;
+      }
+
+      const matches = posts
+        .filter(
+          (post) =>
+            post.title.toLowerCase().includes(query) ||
+            post.tags.some((tag) => tag.toLowerCase().includes(query)),
+        )
+        .slice(0, 8);
+
+      postsList.replaceChildren();
+
+      if (matches.length === 0) {
+        const empty = document.createElement('li');
+        empty.className = 'floating-menu__empty';
+        empty.textContent = '没有匹配的文章';
+        postsList.append(empty);
+        return;
+      }
+
+      for (const post of matches) {
+        const li = document.createElement('li');
+        const link = document.createElement('a');
+        link.href = post.url;
+        link.textContent = post.title;
+        const date = document.createElement('span');
+        date.className = 'floating-menu__date';
+        date.textContent = post.dateLabel;
+        li.append(link, date);
+        postsList.append(li);
+      }
     });
   }
 </script>

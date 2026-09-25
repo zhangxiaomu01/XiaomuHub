@@ -602,8 +602,15 @@ a.tag:hover {
   color: var(--color-accent);
 }
 
-.floating-menu__posts time {
+.floating-menu__posts time,
+.floating-menu__posts .floating-menu__date {
   font-size: 0.8125rem;
+  color: var(--color-text-muted);
+}
+
+.floating-menu__empty {
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
   color: var(--color-text-muted);
 }
 
