@@ -3,6 +3,8 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Comments from '../../components/Comments.astro';
+// KaTeX 公式样式（字体由 Vite 打包，无需 CDN）
+import 'katex/dist/katex.min.css';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft);

@@ -422,6 +422,14 @@ a.tag:hover {
   font-style: italic;
 }
 
+/* ===== KaTeX 数学公式 ===== */
+/* 长公式在窄屏允许横向滚动，避免撑破容器 */
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}
+
 /* ===== 评论区占位 ===== */
 .comments {
   margin-top: 2.5rem;
