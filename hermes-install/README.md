@@ -183,7 +183,8 @@ sudo systemctl daemon-reload && sudo systemctl restart hermes-dashboard
 - **其他页**：Status（状态）、Config（图形化改 150+ 配置）、API Keys（网页上管理 .env 密钥）、Sessions（全文搜索历史）、Logs、Analytics（用量与成本）、Cron（定时任务）。
 - **CLI 直连**（服务器上）：`hermes`（交互，默认 profile）、`wangying`（该 profile 的别名命令，profile create 时自动生成）、`hermes -z "一句话"`（一次性）、`hermes profile list`（查看所有实例）。
 - **手机/平板**：浏览器直接访问对应入口地址，无需装任何 App。
-- **内存特征**：每打开一个 Chat 页，服务器会孵化一组 TUI 进程（python + node，约 350MB/组），页面关闭后约 10 分钟空闲自动回收。期间 `free -h` 的 used 偏高属正常现象，无需处理；反复刷新/重连 Chat 页可能叠加多组进程，等自动回收即可。
+- **内存特征**：Chat 页的 TUI 进程组（node + python，约 300MB/组）由 PTY 会话注册表管理（`hermes_cli/web_server_chat.py`：`ttl=5*60, max_sessions=16`；**原版为 30 分钟，本机已改 5 分钟**）。**每次打开/刷新 Chat 页都会生成新 token、新开一组**（token 仅存页面内存，刷新即失，无法复用旧组）；旧组在断开 **5 分钟**后被回收（后台每 60s 扫描）。反复刷新的堆积峰值约 1~2 组（~600MB）；上限 16 组，超过时新连接报 "Too many chat terminals"。内存紧张时 `sudo systemctl restart hermes-dashboard[-wangying]` 立即清空（当前打开的 Chat 页重连即可，数据无损）。
+  - ⚠️ **TTL 补丁会被 `hermes update` 覆盖**：升级后重新执行 `sed -i 's/ttl=30 \* 60/ttl=5 * 60/' ~/.hermes/hermes-agent/hermes_cli/web_server_chat.py && sudo systemctl restart hermes-dashboard hermes-dashboard-wangying`（备份在同目录 `.bak-ttl30`）。
 
 ---
 
