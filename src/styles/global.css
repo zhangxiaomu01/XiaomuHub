@@ -134,6 +134,18 @@ img {
   font-size: 0.875rem;
 }
 
+.site-footer .icp {
+  margin-top: 0.35rem;
+}
+
+.site-footer .icp a {
+  color: var(--color-text-muted);
+}
+
+.site-footer .icp a:hover {
+  color: var(--color-text);
+}
+
 /* ===== 关于页：个人全身照右浮动，文字环绕（仿旧站 About Me） ===== */
 .prose img.about-portrait {
   float: right;
