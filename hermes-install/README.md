@@ -11,8 +11,8 @@
 
 ```
 用户浏览器
-   │  https://49.235.136.237          (TCP 443)  ← 你的入口
-   │  https://49.235.136.237:8443     (TCP 8443) ← 家人独立入口（profile: wangying）
+   │  https://hermes.zhangxiaomu.top   (TCP 443)  ← 你的入口
+   │  https://wy.zhangxiaomu.top       (TCP 443)  ← 家人独立入口（profile: wangying）
    ▼
 Nginx（宿主机）          ← 第一层：Basic Auth 门禁（每个入口独立的 htpasswd 文件）
    │  反向代理 + WebSocket 升级 + 50M 上传限制
@@ -32,16 +32,16 @@ GLM API (open.bigmodel.cn/api/coding/paas/v4, glm-5.3-flash；两个 profile 各
 |---|---|---|
 | Dashboard（主） | systemd 服务 `hermes-dashboard`，profile default，端口 9119 | `sudo systemctl status/restart hermes-dashboard` |
 | Dashboard（家人） | systemd 服务 `hermes-dashboard-wangying`，profile wangying，端口 9120 | `sudo systemctl status/restart hermes-dashboard-wangying` |
-| 反向代理 | Nginx server 块：`hermes`(443) / `hermes-wangying`(8443) | `sudo nginx -t && sudo systemctl reload nginx` |
-| 门禁账号 | `/etc/nginx/.htpasswd_hermes`(443) / `.htpasswd_wangying`(8443) | `sudo htpasswd ...`（见第四节） |
-| TLS 证书 | Let's Encrypt IP 短证书（6 天有效，**对任意端口通用**），acme.sh cron 自动续期+自动 reload | `~/.acme.sh/acme.sh --info -d 49.235.136.237` |
-| 个人网站 | 宿主机 Nginx 80 口静态站（/var/www/xiaomuhub），与 Hermes 互不影响 | — |
+| 反向代理 | Nginx server 块：`hermes` / `hermes-wangying`（均 443，按子域名分流） | `sudo nginx -t && sudo systemctl reload nginx` |
+| 门禁账号 | `/etc/nginx/.htpasswd_hermes` / `.htpasswd_wangying` | `sudo htpasswd ...`（见第四节） |
+| TLS 证书 | Let's Encrypt 域名证书 90 天（`hermes`+`wy` 双 SAN，与主站证书同套 acme.sh cron 自动续期）。原 IP 短证书（6 天）已停用并移除 | `~/.acme.sh/acme.sh --info -d hermes.zhangxiaomu.top` |
+| 个人网站 | Nginx `xiaomuhub` 站点：`zhangxiaomu.top`(443, default_server) + www/HTTP 301，与 Hermes 互不影响 | — |
 | swap | 4G /swapfile（已写入 fstab） | `free -h` |
 
 访问入口：
 
-- 你的入口：**https://49.235.136.237**
-- 家人入口：**https://49.235.136.237:8443**（wangying 独立实例，与你的数据完全隔离）
+- 你的入口：**https://hermes.zhangxiaomu.top**
+- 家人入口：**https://wy.zhangxiaomu.top**（wangying 独立实例，与你的数据完全隔离）
 
 登录均为两步（同一组凭据输两次）：① 浏览器原生弹窗（Nginx 门禁）→ ② 网页登录表单（Dashboard 会话）。
 
@@ -163,7 +163,7 @@ mkdir -p /var/www/xiaomuhub/.well-known/acme-challenge
 **修复**：
 
 ```bash
-hermes config set dashboard.public_url https://49.235.136.237
+hermes config set dashboard.public_url https://hermes.zhangxiaomu.top
 # 同时在 systemd unit 里配置 HERMES_DASHBOARD_BASIC_AUTH_USERNAME/_PASSWORD（见第六节）
 sudo systemctl daemon-reload && sudo systemctl restart hermes-dashboard
 ```
@@ -178,7 +178,7 @@ sudo systemctl daemon-reload && sudo systemctl restart hermes-dashboard
 
 ## 三、日常使用
 
-- **你的入口**：https://49.235.136.237 ；**家人入口**：https://49.235.136.237:8443（wangying 独立实例）。登录两步：浏览器原生弹窗（Nginx 门禁）→ 网页登录表单（Dashboard 会话），两层账号密码一致，输同一组即可。
+- **你的入口**：https://hermes.zhangxiaomu.top ；**家人入口**：https://wy.zhangxiaomu.top（wangying 独立实例）。登录两步：浏览器原生弹窗（Nginx 门禁）→ 网页登录表单（Dashboard 会话），两层账号密码一致，输同一组即可。
 - **Chat 页**：完整 TUI 内嵌（WebSocket），可斜杠命令、恢复历史会话；让 agent 生成 Word/Excel 后可在网页中查看/下载。
 - **其他页**：Status（状态）、Config（图形化改 150+ 配置）、API Keys（网页上管理 .env 密钥）、Sessions（全文搜索历史）、Logs、Analytics（用量与成本）、Cron（定时任务）。
 - **CLI 直连**（服务器上）：`hermes`（交互，默认 profile）、`wangying`（该 profile 的别名命令，profile create 时自动生成）、`hermes -z "一句话"`（一次性）、`hermes profile list`（查看所有实例）。
@@ -189,12 +189,12 @@ sudo systemctl daemon-reload && sudo systemctl restart hermes-dashboard
 
 ## 四、账号管理
 
-当前采用**独立 profile 多实例**模式：每个用户一个 Hermes profile + 一个专属端口入口，数据完全隔离。当前实例：
+当前采用**独立 profile 多实例**模式：每个用户一个 Hermes profile + 一个专属子域名入口（均走 443），数据完全隔离。当前实例：
 
 | 入口 | profile | systemd 服务 | Nginx 门禁文件 | Dashboard 层账号 |
 |---|---|---|---|---|
-| https://49.235.136.237 | default | `hermes-dashboard` | `/etc/nginx/.htpasswd_hermes` | systemd 环境变量 |
-| https://49.235.136.237:8443 | wangying | `hermes-dashboard-wangying` | `/etc/nginx/.htpasswd_wangying` | systemd 环境变量 |
+| https://hermes.zhangxiaomu.top | default | `hermes-dashboard` | `/etc/nginx/.htpasswd_hermes` | systemd 环境变量 |
+| https://wy.zhangxiaomu.top | wangying | `hermes-dashboard-wangying` | `/etc/nginx/.htpasswd_wangying` | systemd 环境变量 |
 
 鉴权真实模型（实测确认，修正早期认知）：
 
@@ -204,14 +204,24 @@ sudo systemctl daemon-reload && sudo systemctl restart hermes-dashboard
 
 ### 4.1 新增一个独立用户（完整流程）
 
-以新增用户 `xiaoming`、端口 `8444`（内部 9121）为例：
+以新增用户 `xiaoming`、子域名 `xiaoming.zhangxiaomu.top`（内部端口 9121）为例：
 
 ```bash
-# ① 创建 profile（--clone 从 default 克隆模型配置/API Key/SOUL/Skills；--bare 则全新空白）
-hermes profile create xiaoming --clone
-hermes --profile xiaoming config set dashboard.public_url https://49.235.136.237:8444
+# ① DNSPod 控制台加解析：主机记录 xiaoming，A 记录 → 49.235.136.237（等生效，nslookup 可查）
 
-# ② systemd 服务（账号密码即该用户的 Dashboard 登录凭据）
+# ② 签该子域的 90 天证书（webroot 借主站 80 口 ACME 豁免路径，与现有证书同机制）
+~/.acme.sh/acme.sh --issue --server letsencrypt -d xiaoming.zhangxiaomu.top -w /var/www/xiaomuhub --keylength ec-256
+sudo mkdir -p /etc/nginx/ssl/xiaoming.zhangxiaomu.top && sudo chown ubuntu:ubuntu /etc/nginx/ssl/xiaoming.zhangxiaomu.top
+~/.acme.sh/acme.sh --install-cert -d xiaoming.zhangxiaomu.top --ecc \
+  --fullchain-file /etc/nginx/ssl/xiaoming.zhangxiaomu.top/fullchain.pem \
+  --key-file       /etc/nginx/ssl/xiaoming.zhangxiaomu.top/privkey.pem \
+  --reloadcmd 'sudo systemctl reload nginx'
+
+# ③ 创建 profile（--clone 从 default 克隆模型配置/API Key/SOUL/Skills；--bare 则全新空白）
+hermes profile create xiaoming --clone
+hermes --profile xiaoming config set dashboard.public_url https://xiaoming.zhangxiaomu.top
+
+# ④ systemd 服务（账号密码即该用户的 Dashboard 登录凭据）
 sudo tee /etc/systemd/system/hermes-dashboard-xiaoming.service > /dev/null <<'EOF'
 [Unit]
 Description=Hermes Agent Dashboard (profile: xiaoming)
@@ -230,15 +240,15 @@ WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload && sudo systemctl enable --now hermes-dashboard-xiaoming
 
-# ③ Nginx 入口（复用同一张 IP 证书，任意端口通用）
+# ⑤ Nginx 入口（443 按子域名分流，无需动防火墙）
 sudo htpasswd -bB -c /etc/nginx/.htpasswd_xiaoming xiaoming 该用户密码
 sudo tee /etc/nginx/sites-available/hermes-xiaoming > /dev/null <<'EOF'
 server {
-    listen 8444 ssl default_server;
-    listen [::]:8444 ssl default_server;
-    server_name 49.235.136.237;
-    ssl_certificate     /etc/nginx/ssl/fullchain.pem;
-    ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name xiaoming.zhangxiaomu.top;
+    ssl_certificate     /etc/nginx/ssl/xiaoming.zhangxiaomu.top/fullchain.pem;
+    ssl_certificate_key /etc/nginx/ssl/xiaoming.zhangxiaomu.top/privkey.pem;
     client_max_body_size 50m;
     auth_basic "Hermes (xiaoming)";
     auth_basic_user_file /etc/nginx/.htpasswd_xiaoming;
@@ -272,9 +282,9 @@ sudo ln -sf /etc/nginx/sites-available/hermes-xiaoming /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 ```
 
-④ 腾讯云控制台防火墙放行 TCP 8444（每个新端口都要放行一次）。
+**注意**：443 的 `default_server` 标记只在主站 `xiaomuhub` 配置里有，新入口一律不要加（会冲突导致 nginx -t 失败）。
 
-**端口分配约定**：入口端口从 8443 起递增（8443=wangying、8444=xiaoming…），内部端口从 9120 起递增，避免混乱。
+**命名约定**：入口用 `<用户名>.zhangxiaomu.top` 子域名（hermes=default、wy=wangying、xiaoming…），内部端口从 9120 起递增（9120=wangying、9121=xiaoming…），每个子域一张独立证书，互不影响。防火墙无需任何改动（443 已放行）。
 
 > ⚠️ **`--isolated` 不能省**：dashboard 默认是"机器级单例"模式——`--profile X dashboard` 不带 `--isolated` 时会路由到已运行的 machine dashboard（由主实例服务），并非独立进程。多实例部署时每个 unit 必须带 `--isolated`。
 
@@ -320,7 +330,9 @@ sudo rm /etc/nginx/sites-enabled/hermes-xiaoming /etc/nginx/sites-available/herm
 sudo rm /etc/nginx/.htpasswd_xiaoming
 sudo nginx -t && sudo systemctl reload nginx
 hermes profile delete xiaoming -y        # 删除数据（会话/记忆/Skills）
-# 可选：腾讯云防火墙回收 8444
+~/.acme.sh/acme.sh --remove -d xiaoming.zhangxiaomu.top --ecc   # 停掉该子域证书续期
+sudo rm -rf /etc/nginx/ssl/xiaoming.zhangxiaomu.top
+# 可选：DNSPod 控制台删除 xiaoming 的 A 记录
 ```
 
 ### 4.5 备选：共用实例（不做数据隔离）
@@ -364,12 +376,12 @@ hermes -m glm-5.2 --provider zai
 ## 六、安全注意事项
 
 - **本文档与代码仓库中一律不放真实密码/密钥**。真实凭据只存在于服务器上：
-  - Nginx 门禁账号：`/etc/nginx/.htpasswd_hermes`（443）、`/etc/nginx/.htpasswd_wangying`（8443），每新增用户一个文件
+  - Nginx 门禁账号：`/etc/nginx/.htpasswd_hermes`、`/etc/nginx/.htpasswd_wangying`，每新增用户一个文件
   - Dashboard 登录账号：各 `hermes-dashboard*.service` systemd unit（root 可读）
   - 模型 API Key：各 profile 的 `.env`（default 在 `~/.hermes/.env`，wangying 在 `~/.hermes/profiles/wangying/.env`，权限 600）
 - **截图/分享日志前先脱敏**：`hermes` 的输出有自动 redaction，但 nginx 日志、systemd unit、`.env` 内容不会。
 - 初次部署用的登录密码偏弱，**建议尽快更换**（第四节有完整流程，两层一起改）。
-- 9119/9120 端口仅监听 127.0.0.1，公网不可达；公网只暴露 443 与 8443。
+- 9119/9120 端口仅监听 127.0.0.1，公网不可达；公网只暴露 80（跳转/ACME）与 443。
 - `/api/status` 端点公开（仅版本/健康信息，设计如此）；受保护数据端点均有会话鉴权，已实测 401。
 - 备份文件 `tar czf hermes-backup.tgz ~/.hermes` **内含全部 API Key**，存放需加密或限定权限，不要放进网站目录/网盘公开链接。
 - 服务器侧护栏：agent 可执行命令，切勿把 sudo 免密开放给 ubuntu 之外的用户；如需更高隔离可将 terminal 后端切为 docker（`hermes config set terminal.backend docker`，需先装 Docker）。
@@ -396,18 +408,19 @@ hermes pm doctor                          # 工具链体检
 hermes profile list                       # 实例清单
 sudo systemctl status hermes-dashboard hermes-dashboard-wangying   # 服务状态
 journalctl -u hermes-dashboard-wangying -f    # 实时日志（换 -u 看别的实例）
-curl -s -u <账号> https://49.235.136.237/api/status | head -c 300        # 公网探活（主）
-curl -s -u <账号> https://49.235.136.237:8443/api/status | head -c 300   # 公网探活（家人）
+curl -s -u <账号> https://hermes.zhangxiaomu.top/api/status | head -c 300   # 公网探活（主）
+curl -s -u <账号> https://wy.zhangxiaomu.top/api/status | head -c 300       # 公网探活（家人）
 ```
 
 ### 证书（自动，无需人工）
 
 ```bash
 crontab -l | grep acme                    # 每天 4 次自动检查续期（ARI 择期）
-~/.acme.sh/acme.sh --info -d 49.235.136.237   # 查看当前证书与下次续期时间
+~/.acme.sh/acme.sh --info -d zhangxiaomu.top            # 主站证书（裸域+www）
+~/.acme.sh/acme.sh --info -d hermes.zhangxiaomu.top     # Hermes 入口证书（hermes+wy 双 SAN）
 ```
 
-续期走 webroot（80 口），成功后自动 reload nginx，全程无感。证书为 6 天短证书属正常设计。
+在管证书共两张，均为 90 天标准周期。续期走 webroot（80 口 ACME 豁免路径），成功后自动 reload nginx，全程无感。（原 IP 短证书已随域名上线停用并移除。）
 
 ### 备份与恢复
 
@@ -420,7 +433,8 @@ tar czf hermes-backup-$(date +%F).tgz ~/.hermes   # 会话/记忆/Skills/配置/
 
 ---
 
-## 八、后续规划（备案通过后）
+## 八、后续规划
 
-1. **切域名**：DNS 解析 `hermes.<你的域名>` → 49.235.136.237；acme.sh 用 DNS-01（DNSPod API）签 90 天证书；Nginx 加 `server_name hermes.<你的域名>` 的 server 块（与 IP 入口并存，零停机）；`hermes config set dashboard.public_url https://hermes.<你的域名>`；停用 6 天 IP 证书的续期任务。
-2. **接企业微信**：`hermes gateway setup` 选 WeCom，回调 URL 填域名地址，`hermes gateway install` 装成服务；届时手机上直接在企业微信里和 agent 对话（生成交付文件也可直接发送）。网关支持多路复用（multiplex）模式，可同时伺服 default + wangying 两个 profile（聊天账号经 allowlist 映射到各自实例），届时家人无需再开网页。
+> 域名切换已全部完成（2026-09-28）：主站 `https://zhangxiaomu.top`（裸域为主，www/HTTP/IP 均 301）；Hermes 入口 `https://hermes.zhangxiaomu.top`（你）与 `https://wy.zhangxiaomu.top`（家人），IP 入口与 6 天短证书已下线，公网仅暴露 80/443。在管证书两张（主站 / Hermes 双 SAN 子域），均 90 天自动续期。
+
+1. **接企业微信**：`hermes gateway setup` 选 WeCom，回调 URL 填 `https://hermes.zhangxiaomu.top/` 下的网关路径，`hermes gateway install` 装成服务；届时手机上直接在企业微信里和 agent 对话（生成交付文件也可直接发送）。网关支持多路复用（multiplex）模式，可同时伺服 default + wangying 两个 profile（聊天账号经 allowlist 映射到各自实例），届时家人无需再开网页。
