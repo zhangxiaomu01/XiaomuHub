@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import type { TimelineNode } from '../data/industry/embodied-ai-timeline';
 
 // 行业调研「发展路径」竖直时间轴：
@@ -29,7 +30,13 @@ const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
             <p class="timeline__summary">{node.summary}</p>
             {node.image && (
               <figure class="timeline__figure">
-                <img src={node.image.src} alt={node.image.alt} loading="lazy" />
+                <Image
+                  src={node.image.src}
+                  alt={node.image.alt}
+                  widths={[400, 660]}
+                  sizes="(max-width: 719px) 85vw, 330px"
+                  loading="lazy"
+                />
                 <figcaption>{node.image.credit}</figcaption>
               </figure>
             )}

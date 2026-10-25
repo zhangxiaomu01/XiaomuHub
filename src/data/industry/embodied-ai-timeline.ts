@@ -1,6 +1,16 @@
 // 具身智能调研：发展路径时间轴节点数据
 // 约定：所有事实均经核实，sources 里的编号对应文末「参考链接」的 [Sxx]；
-// 找不到可靠来源的事件一律不录入。图片暂缓，待官方素材逐张确认后补充（image 字段已预留）。
+// 找不到可靠来源的事件一律不录入。配图均为官方素材，credit 标注来源。
+
+import type { ImageMetadata } from 'astro';
+
+import figure03Img from '../../assets/industry/embodied-ai/figure-03.jpg';
+import atlasElectricImg from '../../assets/industry/embodied-ai/atlas-electric.jpg';
+import grootN1Img from '../../assets/industry/embodied-ai/groot-n1.jpg';
+import geminiRoboticsImg from '../../assets/industry/embodied-ai/gemini-robotics.jpg';
+import unitreeH1Img from '../../assets/industry/embodied-ai/unitree-h1.png';
+import agilityDigitImg from '../../assets/industry/embodied-ai/agility-digit.jpg';
+import agibotA2Img from '../../assets/industry/embodied-ai/agibot-a2.png';
 
 export interface TimelineNode {
   /** 事件日期（YYYY / YYYY-MM / YYYY-MM-DD），用于排序与展示 */
@@ -10,9 +20,9 @@ export interface TimelineNode {
   title: string;
   /** 2-3 句概述，只写可核实事实 */
   summary: string;
-  /** 官方素材配图（含署名），待补充 */
+  /** 官方素材配图（本地导入，经 Astro 优化） */
   image?: {
-    src: string;
+    src: ImageMetadata;
     alt: string;
     /** 图片来源署名，如「图片来源：Boston Dynamics 官方博客」 */
     credit: string;
@@ -121,6 +131,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Gemini Robotics',
     summary:
       'Google DeepMind 发布基于 Gemini 2.0 的 Gemini Robotics（VLA）与 Gemini Robotics-ER（具身推理），把「动作」作为多模态模型的直接输出模态，并公布了与 Apptronik、Agile Robots 的合作。',
+    image: {
+      src: geminiRoboticsImg,
+      alt: 'Gemini Robotics 模型与机器人交互示意',
+      credit: '图片来源：Google DeepMind 官方博客',
+    },
     links: [
       {
         label: 'DeepMind 官方博客',
@@ -135,6 +150,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'NVIDIA GR00T N1 开源',
     summary:
       'NVIDIA 在 GTC 2025 发布并开源人形机器人基础模型 Isaac GR00T N1：双系统架构（快思考 VLM + 慢思考扩散策略），配套开源仿真库与数据管线，供 Figure、1X、宇树等厂商使用。',
+    image: {
+      src: grootN1Img,
+      alt: 'NVIDIA Isaac GR00T N1 人形机器人基础模型',
+      credit: '图片来源：NVIDIA 新闻中心',
+    },
     links: [
       {
         label: 'NVIDIA 新闻稿',
@@ -220,6 +240,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: '宇树 H1 发布',
     summary:
       '杭州宇树科技发布首款通用人形机器人 H1（后迭代为 H1-2），以高动态运动能力和显著低于同行的售价引发关注。宇树自此从四足机器人厂商扩展为通用人形机器人厂商。',
+    image: {
+      src: unitreeH1Img,
+      alt: '宇树 H1 人形机器人',
+      credit: '图片来源：宇树科技官网',
+    },
     links: [{ label: '宇树官网', url: 'https://www.unitree.com/en/about/' }],
     sources: ['S19'],
   },
@@ -229,6 +254,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Agility Digit 进入 Amazon 仓储',
     summary:
       'Agility Robotics 宣布与 Amazon 扩大合作，在仓储研发站点测试人形机器人 Digit，承担空周转箱回收任务。人形机器人进入真实物流作业场景有了首个公开的企业级试点。',
+    image: {
+      src: agilityDigitImg,
+      alt: 'Agility Digit 人形机器人在仓储场景作业',
+      credit: '图片来源：Agility Robotics 官方新闻页',
+    },
     links: [
       {
         label: 'Agility 官方新闻',
@@ -266,6 +296,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Boston Dynamics 电动 Atlas',
     summary:
       'Boston Dynamics 宣布液压驱动的人形 Atlas 退役，发布全新电动版 Atlas，面向工业应用并与现代汽车集团深度绑定。老牌厂商完成从「研究平台」向「商用产品」的转向（官方页面未标注具体日期）。',
+    image: {
+      src: atlasElectricImg,
+      alt: 'Boston Dynamics 电动版 Atlas',
+      credit: '图片来源：Boston Dynamics 官方博客',
+    },
     links: [
       {
         label: 'Boston Dynamics 博客',
@@ -280,6 +315,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: '智元远征 A2 与量产启动',
     summary:
       '智元机器人（AgiBot）发布远征 A2 等五款商用人形机器人，宣布当年 12 月至次年 1 月开启批量制造。智元以「本体 + 数据 + 模型」全栈布局，成为国内具身智能头部创业公司之一。',
+    image: {
+      src: agibotA2Img,
+      alt: '智元远征 A2 人形机器人',
+      credit: '图片来源：智元机器人官网',
+    },
     links: [{ label: '智元官网', url: 'https://www.agibot.com.cn/article/188/detail/107.html' }],
     sources: ['S23'],
   },
@@ -316,6 +356,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Figure 03 与量产设计',
     summary:
       'Figure 发布第三代机器人 Figure 03，围绕自研 Helix VLA 模型与规模化量产重新设计硬件。同期 1X 开放家用人形机器人 NEO 预订（2026 年起在美国交付），人形机器人从工业场景向家庭场景延伸。',
+    image: {
+      src: figure03Img,
+      alt: 'Figure 03 人形机器人',
+      credit: '图片来源：Figure 官方新闻页',
+    },
     links: [
       { label: 'Figure 03 发布', url: 'https://www.figure.ai/news/introducing-figure-03' },
       { label: '1X NEO 预订', url: 'https://www.1x.tech/discover/neo-home-robot' },
