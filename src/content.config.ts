@@ -36,9 +36,9 @@ const projects = defineCollection({
   }),
 });
 
-// 行业调研集合：src/content/industry/*.md
+// 行业调研集合：src/content/industry/*.md(x)
 const industry = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/industry' }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/industry' }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),

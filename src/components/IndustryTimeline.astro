@@ -1,0 +1,245 @@
+---
+import type { TimelineNode } from '../data/industry/embodied-ai-timeline';
+
+// 行业调研「发展路径」竖直时间轴：
+// 桌面端中轴线左右交错（左技术 / 右行业），移动端折叠为单列。
+interface Props {
+  nodes: TimelineNode[];
+}
+
+const { nodes } = Astro.props;
+
+// 日期格式统一为 YYYY / YYYY-MM / YYYY-MM-DD，字符串比较即为时间序
+const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
+---
+
+<div class="timeline">
+  <div class="timeline__legend" aria-hidden="true">
+    <span class="timeline__legend-item timeline__legend-item--tech">◼ 技术路线</span>
+    <span class="timeline__legend-item timeline__legend-item--industry">◼ 行业发展</span>
+  </div>
+
+  <ol class="timeline__list">
+    {
+      sorted.map((node) => (
+        <li class:list={['timeline__item', `timeline__item--${node.side}`]}>
+          <div class="timeline__card">
+            <span class="timeline__date">{node.date}</span>
+            <h4 class="timeline__title">{node.title}</h4>
+            <p class="timeline__summary">{node.summary}</p>
+            {node.image && (
+              <figure class="timeline__figure">
+                <img src={node.image.src} alt={node.image.alt} loading="lazy" />
+                <figcaption>{node.image.credit}</figcaption>
+              </figure>
+            )}
+            <div class="timeline__footer">
+              <span class="timeline__sources">{node.sources.map((s) => `[${s}]`).join(' ')}</span>
+              <span class="timeline__links">
+                {node.links.map((l) => (
+                  <a href={l.url} target="_blank" rel="noopener">
+                    {l.label} ↗
+                  </a>
+                ))}
+              </span>
+            </div>
+          </div>
+        </li>
+      ))
+    }
+  </ol>
+</div>
+
+<style>
+  .timeline {
+    margin: 2rem 0;
+  }
+
+  .timeline__legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+  }
+
+  .timeline__legend-item--tech::before {
+    color: #7c3aed;
+  }
+
+  .timeline__legend-item--industry::before {
+    color: #0e7490;
+  }
+
+  .timeline__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+  }
+
+  /* 中轴线 */
+  .timeline__list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    width: 2px;
+    background: var(--color-border);
+    transform: translateX(-50%);
+  }
+
+  .timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 3rem 1fr;
+    margin-bottom: 1.25rem;
+  }
+
+  /* 轴上圆点 */
+  .timeline__item::after {
+    content: '';
+    position: absolute;
+    top: 1.6rem;
+    left: 50%;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    border: 2px solid var(--color-bg);
+    transform: translateX(-50%);
+  }
+
+  .timeline__item--tech::after {
+    background: #7c3aed;
+  }
+
+  .timeline__item--industry::after {
+    background: #0e7490;
+  }
+
+  .timeline__item--tech .timeline__card {
+    grid-column: 1;
+    text-align: right;
+  }
+
+  .timeline__item--industry .timeline__card {
+    grid-column: 3;
+  }
+
+  .timeline__card {
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 1rem 1.1rem;
+  }
+
+  .timeline__item--tech .timeline__card {
+    border-left: 3px solid #7c3aed;
+  }
+
+  .timeline__item--industry .timeline__card {
+    border-right: 3px solid #0e7490;
+  }
+
+  .timeline__date {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--color-text-muted);
+    letter-spacing: 0.03em;
+  }
+
+  .timeline__title {
+    margin: 0.35rem 0 0.5rem;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .timeline__summary {
+    margin: 0;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+  }
+
+  .timeline__figure {
+    margin: 0.75rem 0 0;
+  }
+
+  .timeline__figure img {
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+  }
+
+  .timeline__figure figcaption {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.35rem;
+  }
+
+  .timeline__footer {
+    margin-top: 0.65rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+  }
+
+  .timeline__item--tech .timeline__footer {
+    align-items: flex-end;
+  }
+
+  .timeline__item--industry .timeline__footer {
+    align-items: flex-start;
+  }
+
+  .timeline__sources {
+    font-family: var(--font-mono);
+    color: var(--color-text-muted);
+  }
+
+  .timeline__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+  }
+
+  .timeline__links a {
+    font-size: 0.78rem;
+  }
+
+  /* 移动端：折叠为单列，轴线靠左 */
+  @media (max-width: 719px) {
+    .timeline__list::before {
+      left: 8px;
+      transform: none;
+    }
+
+    .timeline__item {
+      grid-template-columns: 2rem 1fr;
+    }
+
+    .timeline__item::after {
+      left: 8px;
+      top: 1.4rem;
+    }
+
+    .timeline__item--tech .timeline__card,
+    .timeline__item--industry .timeline__card {
+      grid-column: 2;
+      text-align: left;
+    }
+
+    .timeline__item--tech .timeline__card {
+      border-left: 3px solid #7c3aed;
+      border-right: 1px solid var(--color-border);
+    }
+
+    .timeline__item--tech .timeline__footer,
+    .timeline__item--industry .timeline__footer {
+      align-items: flex-start;
+    }
+  }
+</style>
