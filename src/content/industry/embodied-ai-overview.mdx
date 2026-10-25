@@ -11,7 +11,7 @@ import { embodiedAiTimeline } from '../../data/industry/embodied-ai-timeline';
 
 「具身智能」（Embodied AI / Embodied Intelligence）是这个栏目的第一个调研对象。本篇先立个总纲：它是什么、为什么在这个时间点爆发、整条产业链上都有谁，以及我打算按什么框架把它拆开来看。
 
-> 本文所有事实性内容均附引用编号（形如 [S01]），对应文末「参考链接」。无法核实来源的信息一律不写入；个人判断会显式标注为「观察」。
+> 本文所有事实性内容均附引用编号（形如 [\[S01\]](#ref-S01)），对应文末「参考链接」。无法核实来源的信息一律不写入；个人判断会显式标注为「观察」。
 
 ## 一、什么是具身智能
 
@@ -19,34 +19,34 @@ import { embodiedAiTimeline } from '../../data/industry/embodied-ai-timeline';
 
 过去十年的深度学习大多停留在「屏幕里」——文本、图像、语音，输入输出都是数字信号。而具身智能强调智能体（agent）通过**身体**（机器人、机械臂、人形机器人等）与环境互动，在感知—决策—行动的闭环中习得能力。
 
-- **大模型给了它一个大脑**：多模态大模型让「看懂场景、听懂指令、规划任务」第一次变得通用可用——从 RT-2 把动作接进视觉-语言模型并确立 VLA 范式 [S07]，到 Gemini Robotics 直接以 Gemini 2.0 为底座输出动作 [S13]；
-- **硬件平台规模化**：通用人形机器人本体密集发布（宇树 H1 [S19]、Figure 01 [S18]、智元远征 A2 [S23]），并进入车厂实训与仓储试点 [S21][S20]；
-- **政策与资本入场**：工信部 2023 年印发人形机器人专项指导意见 [S31]，Figure C 轮融资超 10 亿美元、投后估值 390 亿美元 [S24]，宇树科技 2026 年登陆科创板 [S27]。
+- **大模型给了它一个大脑**：多模态大模型让「看懂场景、听懂指令、规划任务」第一次变得通用可用——从 RT-2 把动作接进视觉-语言模型并确立 VLA 范式 [\[S07\]](#ref-S07)，到 Gemini Robotics 直接以 Gemini 2.0 为底座输出动作 [\[S13\]](#ref-S13)；
+- **硬件平台规模化**：通用人形机器人本体密集发布（宇树 H1 [\[S19\]](#ref-S19)、Figure 01 [\[S18\]](#ref-S18)、智元远征 A2 [\[S23\]](#ref-S23)），并进入车厂实训与仓储试点 [\[S21\]](#ref-S21)[\[S20\]](#ref-S20)；
+- **政策与资本入场**：工信部 2023 年印发人形机器人专项指导意见 [\[S31\]](#ref-S31)，Figure C 轮融资超 10 亿美元、投后估值 390 亿美元 [\[S24\]](#ref-S24)，宇树科技 2026 年登陆科创板 [\[S27\]](#ref-S27)。
 
 ## 二、行业技术发展路径概览
 
 ### 2.1 行业与技术路径总结
 
-**大脑侧：技术主线收敛于 VLA。** 2023 年 RT-2 把动作离散化为 token、与视觉-语言模型联合训练，命名了 VLA（Vision-Language-Action）[S07]；此后开源阵营的 OpenVLA 提供了可复现基线 [S09]，Physical Intelligence 用流匹配动作专家 π0 处理高频精细控制 [S10]，π0.5 进一步把互联网数据引入训练以换取开放世界泛化 [S11]，π\*0.6 则用真机强化学习做后训练 [S12]。动作生成方式上，扩散策略 [S06] 与流匹配 [S10] 并列为主流。世界模型（如 Genie 3 [S15]）被寄望于成为训练环境与数据引擎，但目前主要仍是研究演示。
+**大脑侧：技术主线收敛于 VLA。** 2023 年 RT-2 把动作离散化为 token、与视觉-语言模型联合训练，命名了 VLA（Vision-Language-Action）[\[S07\]](#ref-S07)；此后开源阵营的 OpenVLA 提供了可复现基线 [\[S09\]](#ref-S09)，Physical Intelligence 用流匹配动作专家 π0 处理高频精细控制 [\[S10\]](#ref-S10)，π0.5 进一步把互联网数据引入训练以换取开放世界泛化 [\[S11\]](#ref-S11)，π\*0.6 则用真机强化学习做后训练 [\[S12\]](#ref-S12)。动作生成方式上，扩散策略 [\[S06\]](#ref-S06) 与流匹配 [\[S10\]](#ref-S10) 并列为主流。世界模型（如 Genie 3 [\[S15\]](#ref-S15)）被寄望于成为训练环境与数据引擎，但目前主要仍是研究演示。
 
-**本体侧：从发布会走向真实场景。** 人形机器人经历了 2022–2023 年的密集发布期（Optimus 原型 [S17]、Figure 01 [S18]、宇树 H1 [S19]），2023 年起进入真实作业试点：Agility Digit 在 Amazon 仓储做周转箱回收 [S20]，优必选 Walker S 进蔚来车间实训 [S21]，智元于 2024 年底启动批量制造 [S23]；2025 年 1X NEO 把叙事推进到家庭预订 [S26]。
+**本体侧：从发布会走向真实场景。** 人形机器人经历了 2022–2023 年的密集发布期（Optimus 原型 [\[S17\]](#ref-S17)、Figure 01 [\[S18\]](#ref-S18)、宇树 H1 [\[S19\]](#ref-S19)），2023 年起进入真实作业试点：Agility Digit 在 Amazon 仓储做周转箱回收 [\[S20\]](#ref-S20)，优必选 Walker S 进蔚来车间实训 [\[S21\]](#ref-S21)，智元于 2024 年底启动批量制造 [\[S23\]](#ref-S23)；2025 年 1X NEO 把叙事推进到家庭预订 [\[S26\]](#ref-S26)。
 
-**数据侧：独立赛道成形。** 学术界开源了跨本体数据集 Open X-Embodiment [S08]，智元开源 AgiBot World 真机数据集 [S28]；商业侧，Scale AI 发布 Physical AI 数据引擎并称已交付 10 万+ 小时生产数据 [S29]，光轮智能以合成数据路线成为该领域首个独角兽 [S30]。
+**数据侧：独立赛道成形。** 学术界开源了跨本体数据集 Open X-Embodiment [\[S08\]](#ref-S08)，智元开源 AgiBot World 真机数据集 [\[S28\]](#ref-S28)；商业侧，Scale AI 发布 Physical AI 数据引擎并称已交付 10 万+ 小时生产数据 [\[S29\]](#ref-S29)，光轮智能以合成数据路线成为该领域首个独角兽 [\[S30\]](#ref-S30)。
 
 **现状与主要缺口：**
 
 | 维度 | 现状（2026-10） | 主要缺口 |
 |---|---|---|
-| 泛化能力 | π0.5 等演示跨本体、开放世界任务 [S11] | 长尾任务成功率无公开可比数据；评测基准尚在早期（RoboArena [S34]、SIMPLER [S35]） |
-| 数据 | 开源数据集 + 商业数据服务并行 [S08][S28][S29] | 真机数据成本高；仿真-真机差距犹存；数据格式未统一 |
-| 商业化 | 仓储试点 [S20]、车厂实训 [S21]、家庭预订 [S26] | 尚无公开的规模化营收与可靠性（MTBF）数据；商业模式未定型 |
-| 政策标准 | 中国专项政策 [S31][S38]；ISO 10218:2025 更新 [S32] | 人形机器人专门安全标准、责任认定规则仍缺失 |
+| 泛化能力 | π0.5 等演示跨本体、开放世界任务 [\[S11\]](#ref-S11) | 长尾任务成功率无公开可比数据；评测基准尚在早期（RoboArena [\[S34\]](#ref-S34)、SIMPLER [\[S35\]](#ref-S35)） |
+| 数据 | 开源数据集 + 商业数据服务并行 [\[S08\]](#ref-S08)[\[S28\]](#ref-S28)[\[S29\]](#ref-S29) | 真机数据成本高；仿真-真机差距犹存；数据格式未统一 |
+| 商业化 | 仓储试点 [\[S20\]](#ref-S20)、车厂实训 [\[S21\]](#ref-S21)、家庭预订 [\[S26\]](#ref-S26) | 尚无公开的规模化营收与可靠性（MTBF）数据；商业模式未定型 |
+| 政策标准 | 中国专项政策 [\[S31\]](#ref-S31)[\[S38\]](#ref-S38)；ISO 10218:2025 更新 [\[S32\]](#ref-S32) | 人形机器人专门安全标准、责任认定规则仍缺失 |
 
 > 观察（个人判断，非事实）：2025 年后时间轴上技术节点与产业节点仍在快速增加，但「真实付费的规模化场景」与「发布会演示」之间的差距，是判断这个行业成熟度时最值得盯住的单一指标。
 
 ### 2.2 发展路径
 
-时间轴左侧为技术路线（核心基石），右侧为行业发展（应用场景、企业与产品）。每个节点附来源编号与参考链接。
+时间轴左侧为技术路线（核心基石），右侧为行业发展（应用场景、企业与产品）。默认折叠，点击标题展开；每个节点的来源角标可点击跳转到文末对应参考条目。
 
 <IndustryTimeline nodes={embodiedAiTimeline} />
 
@@ -56,45 +56,45 @@ import { embodiedAiTimeline } from '../../data/industry/embodied-ai-timeline';
 
 ### 3.1 技术路线
 
-VLA 是当前主线：RT-2 确立范式 [S07]，OpenVLA 提供开源基线 [S09]，π0 / π0.5 / π\*0.6 展示了流匹配 + 互联网数据 + 真机 RL 后训练的完整演化 [S10][S11][S12]；NVIDIA GR00T N1 以开源双系统架构（VLM 快思考 + 扩散策略慢思考）切入 [S14]，Gemini Robotics 则代表了「把动作做成基础模型输出模态」的路线 [S13]。分层路线（LLM 规划 + 技能执行，SayCan [S04]）在特定场景仍有生命力。策略表示上扩散 [S06] 与流匹配 [S10] 并列。数据来源三路并行：遥操作真机采集（AgiBot World [S28]）、仿真合成（域随机化 [S02]、世界模型 [S15]）、互联网视频（π0.5 [S11]）。待深挖：各路线在统一评测下的横向对比。
+VLA 是当前主线：RT-2 确立范式 [\[S07\]](#ref-S07)，OpenVLA 提供开源基线 [\[S09\]](#ref-S09)，π0 / π0.5 / π\*0.6 展示了流匹配 + 互联网数据 + 真机 RL 后训练的完整演化 [\[S10\]](#ref-S10)[\[S11\]](#ref-S11)[\[S12\]](#ref-S12)；NVIDIA GR00T N1 以开源双系统架构（VLM 快思考 + 扩散策略慢思考）切入 [\[S14\]](#ref-S14)，Gemini Robotics 则代表了「把动作做成基础模型输出模态」的路线 [\[S13\]](#ref-S13)。分层路线（LLM 规划 + 技能执行，SayCan [\[S04\]](#ref-S04)）在特定场景仍有生命力。策略表示上扩散 [\[S06\]](#ref-S06) 与流匹配 [\[S10\]](#ref-S10) 并列。数据来源三路并行：遥操作真机采集（AgiBot World [\[S28\]](#ref-S28)）、仿真合成（域随机化 [\[S02\]](#ref-S02)、世界模型 [\[S15\]](#ref-S15)）、互联网视频（π0.5 [\[S11\]](#ref-S11)）。待深挖：各路线在统一评测下的横向对比。
 
 ### 3.2 硬件拆解
 
-本体形态之争聚焦「人形是否必要」：目前公开落地的案例中，仓储用双足 Digit [S20]、车厂用人形 Walker S [S21]，而轮式/臂式平台在工业界存量更大（本文暂未收集到系统对比数据）。灵巧手方面，OpenAI Dactyl 证明了高自由度手可控 [S03]，但当前商用本体多为简化夹爪。传感方面，帕西尼以多维触觉切入并宣称年产近 2 亿条具身数据 [S37]。波士顿动力电动 Atlas 的转向代表了硬件平台从液压研究机向电动商用机的整体迁移 [S22]。待深挖：BOM 成本结构、关节方案（谐波/行星滚柱丝杠）的国产化情况。
+本体形态之争聚焦「人形是否必要」：目前公开落地的案例中，仓储用双足 Digit [\[S20\]](#ref-S20)、车厂用人形 Walker S [\[S21\]](#ref-S21)，而轮式/臂式平台在工业界存量更大（本文暂未收集到系统对比数据）。灵巧手方面，OpenAI Dactyl 证明了高自由度手可控 [\[S03\]](#ref-S03)，但当前商用本体多为简化夹爪。传感方面，帕西尼以多维触觉切入并宣称年产近 2 亿条具身数据 [\[S37\]](#ref-S37)。波士顿动力电动 Atlas 的转向代表了硬件平台从液压研究机向电动商用机的整体迁移 [\[S22\]](#ref-S22)。待深挖：BOM 成本结构、关节方案（谐波/行星滚柱丝杠）的国产化情况。
 
 ### 3.3 玩家图谱
 
-- **美国**：Tesla（Optimus [S17]）、Figure（01/03 本体 + Helix 模型 [S18][S25]）、Agility（Digit [S20]）、1X（NEO [S26]）；「大脑」侧 Physical Intelligence（π 系列 [S10][S12]，2025 年 11 月获 6 亿美元 B 轮 [S39]）；数据侧 Scale AI [S29]。
-- **中国**：宇树（H1 [S19]、科创板上市 [S27]）、智元（本体 + AgiBot World 数据 [S23][S28]）、优必选（Walker S [S21]）；数据侧光轮智能 [S30][S40]、帕西尼 [S37]；国家级平台「国家地方共建具身智能机器人创新中心」[S36]。
+- **美国**：Tesla（Optimus [\[S17\]](#ref-S17)）、Figure（01/03 本体 + Helix 模型 [\[S18\]](#ref-S18)[\[S25\]](#ref-S25)）、Agility（Digit [\[S20\]](#ref-S20)）、1X（NEO [\[S26\]](#ref-S26)）；「大脑」侧 Physical Intelligence（π 系列 [\[S10\]](#ref-S10)[\[S12\]](#ref-S12)，2025 年 11 月获 6 亿美元 B 轮 [\[S39\]](#ref-S39)）；数据侧 Scale AI [\[S29\]](#ref-S29)。
+- **中国**：宇树（H1 [\[S19\]](#ref-S19)、科创板上市 [\[S27\]](#ref-S27)）、智元（本体 + AgiBot World 数据 [\[S23\]](#ref-S23)[\[S28\]](#ref-S28)）、优必选（Walker S [\[S21\]](#ref-S21)）；数据侧光轮智能 [\[S30\]](#ref-S30)[\[S40\]](#ref-S40)、帕西尼 [\[S37\]](#ref-S37)；国家级平台「国家地方共建具身智能机器人创新中心」[\[S36\]](#ref-S36)。
 - **欧洲/日本**：暂未收集到 2025 年后有同等级公开里程碑事件，留待补充。
 
 待深挖：各家的「本体 / 大脑 / 数据」定位矩阵与供应链关系。
 
 ### 3.4 商业化路径
 
-公开可见的落地节奏：仓储物流试点（Agility × Amazon，2023 [S20]）→ 汽车工厂实训（优必选 × 蔚来 [S21]、智元量产 [S23]）→ 家庭场景预订（1X NEO，2026 年起美国交付 [S26]）。北京的行动计划给出了官方目标：2027 年具身智能机器人量产突破万台 [S38]。
+公开可见的落地节奏：仓储物流试点（Agility × Amazon，2023 [\[S20\]](#ref-S20)）→ 汽车工厂实训（优必选 × 蔚来 [\[S21\]](#ref-S21)、智元量产 [\[S23\]](#ref-S23)）→ 家庭场景预订（1X NEO，2026 年起美国交付 [\[S26\]](#ref-S26)）。北京的行动计划给出了官方目标：2027 年具身智能机器人量产突破万台 [\[S38\]](#ref-S38)。
 
 > 观察：目前公开信息里缺少规模化营收、部署台数、可靠性数据的披露，商业化判断需要等一手财报或监管披露。
 
 ### 3.5 投资视角
 
-可核实的资本里程碑：Figure C 轮承诺资本超 10 亿美元、投后估值 390 亿美元 [S24]；Physical Intelligence 6 亿美元 B 轮（CapitalG 领投）[S39]；光轮智能 10 亿元融资成为具身数据首个独角兽 [S30]（2026 年 6 月再获巨人网络等 10 亿元战投 [S41]）；宇树科技科创板上市成为「人形机器人第一股」[S27]。待深挖：市场空间测算（各家口径差异大，需逐个溯源）、估值逻辑（对标工业机器人还是汽车产业链）。
+可核实的资本里程碑：Figure C 轮承诺资本超 10 亿美元、投后估值 390 亿美元 [\[S24\]](#ref-S24)；Physical Intelligence 6 亿美元 B 轮（CapitalG 领投）[\[S39\]](#ref-S39)；光轮智能 10 亿元融资成为具身数据首个独角兽 [\[S30\]](#ref-S30)（2026 年 6 月再获巨人网络等 10 亿元战投 [\[S41\]](#ref-S41)）；宇树科技科创板上市成为「人形机器人第一股」[\[S27\]](#ref-S27)。待深挖：市场空间测算（各家口径差异大，需逐个溯源）、估值逻辑（对标工业机器人还是汽车产业链）。
 
 ### 3.6 数据与评测基准
 
 数据是当前行业公认的核心瓶颈，也是新形成的独立赛道：
 
-- **开源数据集**：Open X-Embodiment（22 种本体、100 万+ 轨迹 [S08]）、AgiBot World（百万级真机数据 [S28]）；
-- **商业数据服务**：Scale AI Physical AI 数据引擎（10 万+ 小时交付 [S29]）、光轮智能（合成数据，客户含 Figure AI、NVIDIA [S30][S40]）、帕西尼（触觉数据 [S37]）；
-- **国家级基建**：国家地方共建具身智能机器人创新中心（2024 年 10 月揭牌 [S36]）；
-- **评测基准**：仿真评测 SIMPLER [S35]、分布式真机评测 RoboArena [S34]。真机评测仍属早期，「哪个模型更强」目前缺乏公认答案。
+- **开源数据集**：Open X-Embodiment（22 种本体、100 万+ 轨迹 [\[S08\]](#ref-S08)）、AgiBot World（百万级真机数据 [\[S28\]](#ref-S28)）；
+- **商业数据服务**：Scale AI Physical AI 数据引擎（10 万+ 小时交付 [\[S29\]](#ref-S29)）、光轮智能（合成数据，客户含 Figure AI、NVIDIA [\[S30\]](#ref-S30)[\[S40\]](#ref-S40)）、帕西尼（触觉数据 [\[S37\]](#ref-S37)）；
+- **国家级基建**：国家地方共建具身智能机器人创新中心（2024 年 10 月揭牌 [\[S36\]](#ref-S36)）；
+- **评测基准**：仿真评测 SIMPLER [\[S35\]](#ref-S35)、分布式真机评测 RoboArena [\[S34\]](#ref-S34)。真机评测仍属早期，「哪个模型更强」目前缺乏公认答案。
 
 待深挖：遥操作采集的成本结构、合成数据的真机迁移率证据。
 
 ### 3.7 政策与安全标准
 
-- **中国**：工信部《人形机器人创新发展指导意见》（2023-11，目标 2025 批量生产、2027 世界先进 [S31]）；北京《具身智能科技创新与产业培育行动计划（2025-2027）》（目标 2027 量产破万台 [S38]）。
-- **国际标准**：ISO 10218-1/-2:2025 于 2025 年 2 月发布，替代 2011 版 [S32]；原协作机器人安全标准 ISO/TS 15066 的主要内容已并入 10218:2025，版本状态转为待修订 [S33]。
+- **中国**：工信部《人形机器人创新发展指导意见》（2023-11，目标 2025 批量生产、2027 世界先进 [\[S31\]](#ref-S31)）；北京《具身智能科技创新与产业培育行动计划（2025-2027）》（目标 2027 量产破万台 [\[S38\]](#ref-S38)）。
+- **国际标准**：ISO 10218-1/-2:2025 于 2025 年 2 月发布，替代 2011 版 [\[S32\]](#ref-S32)；原协作机器人安全标准 ISO/TS 15066 的主要内容已并入 10218:2025，版本状态转为待修订 [\[S33\]](#ref-S33)。
 - 待深挖：人形机器人专属的安全/伦理/责任规则（目前未见成文标准）、美欧监管动向。
 
 ## 四、参考链接
@@ -103,56 +103,56 @@ VLA 是当前主线：RT-2 确立范式 [S07]，OpenVLA 提供开源基线 [S09]
 
 ### 论文（arXiv）
 
-- [S01] Playing Atari with Deep Reinforcement Learning（DQN）· DeepMind · 2013-12 · [https://arxiv.org/abs/1312.5602](https://arxiv.org/abs/1312.5602)
-- [S02] Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World · 2017-03 · [https://arxiv.org/abs/1703.06907](https://arxiv.org/abs/1703.06907)
-- [S03] Learning Dexterous In-Hand Manipulation（OpenAI Dactyl）· 2018-08 · [https://arxiv.org/abs/1808.00177](https://arxiv.org/abs/1808.00177)
-- [S04] Do As I Can, Not As I Say（SayCan）· 2022-04 · [https://arxiv.org/abs/2204.01691](https://arxiv.org/abs/2204.01691)
-- [S05] RT-1: Robotics Transformer for Real-World Control at Scale · 2022-12 · [https://arxiv.org/abs/2212.06817](https://arxiv.org/abs/2212.06817)
-- [S06] Diffusion Policy: Visuomotor Policy Learning via Action Diffusion · 2023-03 · [https://arxiv.org/abs/2303.04137](https://arxiv.org/abs/2303.04137)
-- [S07] RT-2: Vision-Language-Action Models · 2023-07 · [https://arxiv.org/abs/2307.15818](https://arxiv.org/abs/2307.15818)
-- [S08] Open X-Embodiment: Robotic Learning Datasets and RT-X Models · 2023-10 · [https://arxiv.org/abs/2310.08864](https://arxiv.org/abs/2310.08864)
-- [S09] OpenVLA: An Open-Source Vision-Language-Action Model · 2024-06 · [https://arxiv.org/abs/2406.09246](https://arxiv.org/abs/2406.09246)
-- [S10] π0: A Vision-Language-Action Flow Model · 2024-10 · [https://arxiv.org/abs/2410.24164](https://arxiv.org/abs/2410.24164)
-- [S11] π0.5: a Vision-Language-Action Model with Open-World Generalization · 2025-04 · [https://arxiv.org/abs/2504.16054](https://arxiv.org/abs/2504.16054)
-- [S34] RoboArena: Evaluating Robotic Manipulation on Large-Scale, Real-World... · 2025-06 · [https://arxiv.org/abs/2506.18123](https://arxiv.org/abs/2506.18123)
-- [S35] SIMPLER / SimplerEnv 仿真评测 · 2024-05 · [https://arxiv.org/abs/2405.05941](https://arxiv.org/abs/2405.05941)
+- <span id="ref-S01"></span>[S01] Playing Atari with Deep Reinforcement Learning（DQN）· DeepMind · 2013-12 · [https://arxiv.org/abs/1312.5602](https://arxiv.org/abs/1312.5602)
+- <span id="ref-S02"></span>[S02] Domain Randomization for Transferring Deep Neural Networks from Simulation to the Real World · 2017-03 · [https://arxiv.org/abs/1703.06907](https://arxiv.org/abs/1703.06907)
+- <span id="ref-S03"></span>[S03] Learning Dexterous In-Hand Manipulation（OpenAI Dactyl）· 2018-08 · [https://arxiv.org/abs/1808.00177](https://arxiv.org/abs/1808.00177)
+- <span id="ref-S04"></span>[S04] Do As I Can, Not As I Say（SayCan）· 2022-04 · [https://arxiv.org/abs/2204.01691](https://arxiv.org/abs/2204.01691)
+- <span id="ref-S05"></span>[S05] RT-1: Robotics Transformer for Real-World Control at Scale · 2022-12 · [https://arxiv.org/abs/2212.06817](https://arxiv.org/abs/2212.06817)
+- <span id="ref-S06"></span>[S06] Diffusion Policy: Visuomotor Policy Learning via Action Diffusion · 2023-03 · [https://arxiv.org/abs/2303.04137](https://arxiv.org/abs/2303.04137)
+- <span id="ref-S07"></span>[S07] RT-2: Vision-Language-Action Models · 2023-07 · [https://arxiv.org/abs/2307.15818](https://arxiv.org/abs/2307.15818)
+- <span id="ref-S08"></span>[S08] Open X-Embodiment: Robotic Learning Datasets and RT-X Models · 2023-10 · [https://arxiv.org/abs/2310.08864](https://arxiv.org/abs/2310.08864)
+- <span id="ref-S09"></span>[S09] OpenVLA: An Open-Source Vision-Language-Action Model · 2024-06 · [https://arxiv.org/abs/2406.09246](https://arxiv.org/abs/2406.09246)
+- <span id="ref-S10"></span>[S10] π0: A Vision-Language-Action Flow Model · 2024-10 · [https://arxiv.org/abs/2410.24164](https://arxiv.org/abs/2410.24164)
+- <span id="ref-S11"></span>[S11] π0.5: a Vision-Language-Action Model with Open-World Generalization · 2025-04 · [https://arxiv.org/abs/2504.16054](https://arxiv.org/abs/2504.16054)
+- <span id="ref-S34"></span>[S34] RoboArena: Evaluating Robotic Manipulation on Large-Scale, Real-World... · 2025-06 · [https://arxiv.org/abs/2506.18123](https://arxiv.org/abs/2506.18123)
+- <span id="ref-S35"></span>[S35] SIMPLER / SimplerEnv 仿真评测 · 2024-05 · [https://arxiv.org/abs/2405.05941](https://arxiv.org/abs/2405.05941)
 
 ### 官方发布（公司 / 机构）
 
-- [S12] π\*0.6 发布 · Physical Intelligence 博客 · 2025-11 · [https://www.pi.website/blog/pistar06](https://www.pi.website/blog/pistar06)
-- [S13] Gemini Robotics · Google DeepMind 博客 · 2025-03 · [https://deepmind.google/blog/gemini-robotics-brings-ai-into-the-physical-world/](https://deepmind.google/blog/gemini-robotics-brings-ai-into-the-physical-world/)
-- [S14] Isaac GR00T N1 开源 · NVIDIA 新闻稿 · 2025-03 · [https://nvidianews.nvidia.com/news/nvidia-releases-isaac-gr00t-n1-worlds-first-open-humanoid-robot-foundation-model-and-simulation-libraries](https://nvidianews.nvidia.com/news/nvidia-releases-isaac-gr00t-n1-worlds-first-open-humanoid-robot-foundation-model-and-simulation-libraries)
-- [S15] Genie 3: A New Frontier for World Models · Google DeepMind 博客 · 2025-08 · [https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/)
-- [S16] DARPA Robotics Challenge 决赛回顾 · NIST · 2015 · [https://www.nist.gov/el/el-highlights-september-2015](https://www.nist.gov/el/el-highlights-september-2015)
-- [S18] Figure 01 发布 · Figure / PR Newswire · 2023-03 · [https://www.prnewswire.com/news-releases/figure-emerges-from-stealth-and-unveils-figure-01--a-humanoid-robot-to-support-supply-chain-on-a-global-scale-301759983.html](https://www.prnewswire.com/news-releases/figure-emerges-from-stealth-and-unveils-figure-01--a-humanoid-robot-to-support-supply-chain-on-a-global-scale-301759983.html)
-- [S19] 宇树科技官网（H1 发布）· 2023-08 · [https://www.unitree.com/en/about/](https://www.unitree.com/en/about/)
-- [S20] Agility 与 Amazon 扩大合作 · Agility Robotics · 2023-10 · [https://www.agilityrobotics.com/content/agility-robotics-broadens-relationship-with-amazon](https://www.agilityrobotics.com/content/agility-robotics-broadens-relationship-with-amazon)
-- [S21] Walker S 系列方案页 · 优必选官网 · [https://www.ubtrobot.com/cn/humanoid/solutions](https://www.ubtrobot.com/cn/humanoid/solutions)
-- [S22] Electric New Era for Atlas · Boston Dynamics 博客 · 2024-04 · [https://bostondynamics.com/blog/electric-new-era-for-atlas/](https://bostondynamics.com/blog/electric-new-era-for-atlas/)
-- [S23] 远征 A2 发布 · 智元机器人官网 · 2024-08 · [https://www.agibot.com.cn/article/188/detail/107.html](https://www.agibot.com.cn/article/188/detail/107.html)
-- [S24] Figure Series C · Figure 官方 · 2025-09 · [https://www.figure.ai/news/series-c](https://www.figure.ai/news/series-c)
-- [S25] Introducing Figure 03 · Figure 官方 · 2025-10 · [https://www.figure.ai/news/introducing-figure-03](https://www.figure.ai/news/introducing-figure-03)
-- [S26] NEO Home Robot 预订 · 1X 官方 · 2025-10 · [https://www.1x.tech/discover/neo-home-robot](https://www.1x.tech/discover/neo-home-robot)
-- [S27] 宇树科技首次公开发行股票并在科创板上市公告 · 上交所 · 2026-08 · [https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20260818_10829204.shtml](https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20260818_10829204.shtml)
-- [S28] AgiBot World 数据集 · 智元机器人官网 · 2024-12 · [https://www.agibot.com.cn/about_Zhiyuan](https://www.agibot.com.cn/about_Zhiyuan)
-- [S29] Scale AI Physical AI 数据引擎 · Scale 官方博客 · 2025-09 · [https://scale.com/blog/physical-ai](https://scale.com/blog/physical-ai)
+- <span id="ref-S12"></span>[S12] π\*0.6 发布 · Physical Intelligence 博客 · 2025-11 · [https://www.pi.website/blog/pistar06](https://www.pi.website/blog/pistar06)
+- <span id="ref-S13"></span>[S13] Gemini Robotics · Google DeepMind 博客 · 2025-03 · [https://deepmind.google/blog/gemini-robotics-brings-ai-into-the-physical-world/](https://deepmind.google/blog/gemini-robotics-brings-ai-into-the-physical-world/)
+- <span id="ref-S14"></span>[S14] Isaac GR00T N1 开源 · NVIDIA 新闻稿 · 2025-03 · [https://nvidianews.nvidia.com/news/nvidia-releases-isaac-gr00t-n1-worlds-first-open-humanoid-robot-foundation-model-and-simulation-libraries](https://nvidianews.nvidia.com/news/nvidia-releases-isaac-gr00t-n1-worlds-first-open-humanoid-robot-foundation-model-and-simulation-libraries)
+- <span id="ref-S15"></span>[S15] Genie 3: A New Frontier for World Models · Google DeepMind 博客 · 2025-08 · [https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/](https://deepmind.google/blog/genie-3-a-new-frontier-for-world-models/)
+- <span id="ref-S16"></span>[S16] DARPA Robotics Challenge 决赛回顾 · NIST · 2015 · [https://www.nist.gov/el/el-highlights-september-2015](https://www.nist.gov/el/el-highlights-september-2015)
+- <span id="ref-S18"></span>[S18] Figure 01 发布 · Figure / PR Newswire · 2023-03 · [https://www.prnewswire.com/news-releases/figure-emerges-from-stealth-and-unveils-figure-01--a-humanoid-robot-to-support-supply-chain-on-a-global-scale-301759983.html](https://www.prnewswire.com/news-releases/figure-emerges-from-stealth-and-unveils-figure-01--a-humanoid-robot-to-support-supply-chain-on-a-global-scale-301759983.html)
+- <span id="ref-S19"></span>[S19] 宇树科技官网（H1 发布）· 2023-08 · [https://www.unitree.com/en/about/](https://www.unitree.com/en/about/)
+- <span id="ref-S20"></span>[S20] Agility 与 Amazon 扩大合作 · Agility Robotics · 2023-10 · [https://www.agilityrobotics.com/content/agility-robotics-broadens-relationship-with-amazon](https://www.agilityrobotics.com/content/agility-robotics-broadens-relationship-with-amazon)
+- <span id="ref-S21"></span>[S21] Walker S 系列方案页 · 优必选官网 · [https://www.ubtrobot.com/cn/humanoid/solutions](https://www.ubtrobot.com/cn/humanoid/solutions)
+- <span id="ref-S22"></span>[S22] Electric New Era for Atlas · Boston Dynamics 博客 · 2024-04 · [https://bostondynamics.com/blog/electric-new-era-for-atlas/](https://bostondynamics.com/blog/electric-new-era-for-atlas/)
+- <span id="ref-S23"></span>[S23] 远征 A2 发布 · 智元机器人官网 · 2024-08 · [https://www.agibot.com.cn/article/188/detail/107.html](https://www.agibot.com.cn/article/188/detail/107.html)
+- <span id="ref-S24"></span>[S24] Figure Series C · Figure 官方 · 2025-09 · [https://www.figure.ai/news/series-c](https://www.figure.ai/news/series-c)
+- <span id="ref-S25"></span>[S25] Introducing Figure 03 · Figure 官方 · 2025-10 · [https://www.figure.ai/news/introducing-figure-03](https://www.figure.ai/news/introducing-figure-03)
+- <span id="ref-S26"></span>[S26] NEO Home Robot 预订 · 1X 官方 · 2025-10 · [https://www.1x.tech/discover/neo-home-robot](https://www.1x.tech/discover/neo-home-robot)
+- <span id="ref-S27"></span>[S27] 宇树科技首次公开发行股票并在科创板上市公告 · 上交所 · 2026-08 · [https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20260818_10829204.shtml](https://www.sse.com.cn/disclosure/announcement/listing/ipo/c/c_20260818_10829204.shtml)
+- <span id="ref-S28"></span>[S28] AgiBot World 数据集 · 智元机器人官网 · 2024-12 · [https://www.agibot.com.cn/about_Zhiyuan](https://www.agibot.com.cn/about_Zhiyuan)
+- <span id="ref-S29"></span>[S29] Scale AI Physical AI 数据引擎 · Scale 官方博客 · 2025-09 · [https://scale.com/blog/physical-ai](https://scale.com/blog/physical-ai)
 
 ### 政策与标准（政府 / 标准组织）
 
-- [S31] 《人形机器人创新发展指导意见》· 工信部 / 中国政府网 · 2023-11 · [https://www.gov.cn/lianbo/bumen/202311/content_6913551.htm](https://www.gov.cn/lianbo/bumen/202311/content_6913551.htm)
-- [S32] ISO 10218-1:2025 · ISO 官网 · 2025-02 · [https://www.iso.org/standard/73933.html](https://www.iso.org/standard/73933.html)
-- [S33] ISO/TS 15066（状态页）· ISO 官网 · [https://www.iso.org/standard/62996.html](https://www.iso.org/standard/62996.html)
-- [S36] 国家地方共建具身智能机器人创新中心揭牌 · 北京市政府网 · 2024-10 · [https://www.beijing.gov.cn/ywdt/gzdt/202410/t20241012_3917849.html](https://www.beijing.gov.cn/ywdt/gzdt/202410/t20241012_3917849.html)
-- [S38] 《北京具身智能科技创新与产业培育行动计划（2025-2027）》· 北京市科委 · 2025-02 · [http://kw.beijing.gov.cn/zwgk/zcwj/202502/t20250227_4020661.html](http://kw.beijing.gov.cn/zwgk/zcwj/202502/t20250227_4020661.html)
+- <span id="ref-S31"></span>[S31] 《人形机器人创新发展指导意见》· 工信部 / 中国政府网 · 2023-11 · [https://www.gov.cn/lianbo/bumen/202311/content_6913551.htm](https://www.gov.cn/lianbo/bumen/202311/content_6913551.htm)
+- <span id="ref-S32"></span>[S32] ISO 10218-1:2025 · ISO 官网 · 2025-02 · [https://www.iso.org/standard/73933.html](https://www.iso.org/standard/73933.html)
+- <span id="ref-S33"></span>[S33] ISO/TS 15066（状态页）· ISO 官网 · [https://www.iso.org/standard/62996.html](https://www.iso.org/standard/62996.html)
+- <span id="ref-S36"></span>[S36] 国家地方共建具身智能机器人创新中心揭牌 · 北京市政府网 · 2024-10 · [https://www.beijing.gov.cn/ywdt/gzdt/202410/t20241012_3917849.html](https://www.beijing.gov.cn/ywdt/gzdt/202410/t20241012_3917849.html)
+- <span id="ref-S38"></span>[S38] 《北京具身智能科技创新与产业培育行动计划（2025-2027）》· 北京市科委 · 2025-02 · [http://kw.beijing.gov.cn/zwgk/zcwj/202502/t20250227_4020661.html](http://kw.beijing.gov.cn/zwgk/zcwj/202502/t20250227_4020661.html)
 
 ### 媒体报道（仅补充官方未披露信息）
 
-- [S17] Tesla Optimus 原型首秀 · CGTN · 2022-09 · [https://news.cgtn.com/news/2022-10-01/Tesla-robot-walks-waves-Musk-plans-to-make-millions-of-them-1dMwa0LIH5e/index.html](https://news.cgtn.com/news/2022-10-01/Tesla-robot-walks-waves-Musk-plans-to-make-millions-of-them-1dMwa0LIH5e/index.html)
-- [S30] 光轮智能成为具身数据首个独角兽 · 北京市科委网站（转载报道）· 2026-03 · [https://kw.beijing.gov.cn/xwdt/kcyx/xwdtyqqy/202603/t20260312_4551125.html](https://kw.beijing.gov.cn/xwdt/kcyx/xwdtyqqy/202603/t20260312_4551125.html)
-- [S37] 帕西尼获京东战略领投 A 轮 · 央广网 · 2025-08 · [http://tech.cnr.cn/ycbd/20250805/t20250805_527303359.shtml](http://tech.cnr.cn/ycbd/20250805/t20250805_527303359.shtml)
-- [S39] Physical Intelligence 获 6 亿美元融资 · The Robot Report · 2025-11 · [https://www.therobotreport.com/physical-intelligence-raises-600m-advance-robot-foundation-models/](https://www.therobotreport.com/physical-intelligence-raises-600m-advance-robot-foundation-models/)
-- [S40] 光轮智能业务与客户 · 36氪（媒体）· [https://www.36kr.com/p/3014453094966792](https://www.36kr.com/p/3014453094966792)
-- [S41] 光轮智能获 10 亿元战略融资 · 上海证券报（媒体）· 2026-06 · [http://www.cnstock.com/commonDetail/732791](http://www.cnstock.com/commonDetail/732791)
+- <span id="ref-S17"></span>[S17] Tesla Optimus 原型首秀 · CGTN · 2022-09 · [https://news.cgtn.com/news/2022-10-01/Tesla-robot-walks-waves-Musk-plans-to-make-millions-of-them-1dMwa0LIH5e/index.html](https://news.cgtn.com/news/2022-10-01/Tesla-robot-walks-waves-Musk-plans-to-make-millions-of-them-1dMwa0LIH5e/index.html)
+- <span id="ref-S30"></span>[S30] 光轮智能成为具身数据首个独角兽 · 北京市科委网站（转载报道）· 2026-03 · [https://kw.beijing.gov.cn/xwdt/kcyx/xwdtyqqy/202603/t20260312_4551125.html](https://kw.beijing.gov.cn/xwdt/kcyx/xwdtyqqy/202603/t20260312_4551125.html)
+- <span id="ref-S37"></span>[S37] 帕西尼获京东战略领投 A 轮 · 央广网 · 2025-08 · [http://tech.cnr.cn/ycbd/20250805/t20250805_527303359.shtml](http://tech.cnr.cn/ycbd/20250805/t20250805_527303359.shtml)
+- <span id="ref-S39"></span>[S39] Physical Intelligence 获 6 亿美元融资 · The Robot Report · 2025-11 · [https://www.therobotreport.com/physical-intelligence-raises-600m-advance-robot-foundation-models/](https://www.therobotreport.com/physical-intelligence-raises-600m-advance-robot-foundation-models/)
+- <span id="ref-S40"></span>[S40] 光轮智能业务与客户 · 36氪（媒体）· [https://www.36kr.com/p/3014453094966792](https://www.36kr.com/p/3014453094966792)
+- <span id="ref-S41"></span>[S41] 光轮智能获 10 亿元战略融资 · 上海证券报（媒体）· 2026-06 · [http://www.cnstock.com/commonDetail/732791](http://www.cnstock.com/commonDetail/732791)
 
 ### 引用覆盖自查
 

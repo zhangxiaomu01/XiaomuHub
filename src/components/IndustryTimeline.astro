@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import type { TimelineNode } from '../data/industry/embodied-ai-timeline';
 
 // 行业调研「发展路径」竖直时间轴：
-// 桌面端中轴线左右交错（左技术 / 右行业），移动端折叠为单列。
+// 默认折叠（<details>），点击标题展开；桌面端中轴线左右交错（左技术 / 右行业），移动端单列。
 interface Props {
   nodes: TimelineNode[];
 }
@@ -12,56 +12,133 @@ const { nodes } = Astro.props;
 
 // 日期格式统一为 YYYY / YYYY-MM / YYYY-MM-DD，字符串比较即为时间序
 const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
+const techCount = sorted.filter((n) => n.side === 'tech').length;
+const industryCount = sorted.length - techCount;
 ---
 
-<div class="timeline">
-  <div class="timeline__legend" aria-hidden="true">
-    <span class="timeline__legend-item timeline__legend-item--tech">◼ 技术路线</span>
-    <span class="timeline__legend-item timeline__legend-item--industry">◼ 行业发展</span>
-  </div>
+{/* 外层用 industry-timeline 避免与关于页全局 .timeline 样式冲突 */}
+<div class="industry-timeline">
+  <details class="timeline__details">
+    <summary>
+      <span class="timeline__summary-title">
+        发展路径时间轴 · 共 {sorted.length} 个节点（技术 {techCount} · 行业 {industryCount}）
+      </span>
+      <span class="timeline__summary-hint timeline__summary-hint--open">展开 ▾</span>
+      <span class="timeline__summary-hint timeline__summary-hint--close">收起 ▴</span>
+    </summary>
 
-  <ol class="timeline__list">
-    {
-      sorted.map((node) => (
-        <li class:list={['timeline__item', `timeline__item--${node.side}`]}>
-          <div class="timeline__card">
-            <span class="timeline__date">{node.date}</span>
-            <h4 class="timeline__title">{node.title}</h4>
-            <p class="timeline__summary">{node.summary}</p>
-            {node.image && (
-              <figure class="timeline__figure">
-                <Image
-                  src={node.image.src}
-                  alt={node.image.alt}
-                  widths={[400, 660]}
-                  sizes="(max-width: 719px) 85vw, 330px"
-                  loading="lazy"
-                />
-                <figcaption>{node.image.credit}</figcaption>
-              </figure>
-            )}
-            <div class="timeline__footer">
-              <span class="timeline__sources">{node.sources.map((s) => `[${s}]`).join(' ')}</span>
-              <span class="timeline__links">
-                {node.links.map((l) => (
-                  <a href={l.url} target="_blank" rel="noopener">
-                    {l.label} ↗
-                  </a>
-                ))}
-              </span>
+    <div class="timeline__legend" aria-hidden="true">
+      <span class="timeline__legend-item timeline__legend-item--tech">◼ 技术路线</span>
+      <span class="timeline__legend-item timeline__legend-item--industry">◼ 行业发展</span>
+    </div>
+
+    <ol class="timeline__list">
+      {
+        sorted.map((node) => (
+          <li class:list={['timeline__item', `timeline__item--${node.side}`]}>
+            <div class="timeline__card">
+              <span class="timeline__date">{node.date}</span>
+              <h4 class="timeline__title">{node.title}</h4>
+              <p class="timeline__summary">{node.summary}</p>
+              {node.image && (
+                <figure class="timeline__figure">
+                  <Image
+                    src={node.image.src}
+                    alt={node.image.alt}
+                    widths={[400, 660]}
+                    sizes="(max-width: 719px) 85vw, 330px"
+                    loading="lazy"
+                  />
+                  <figcaption>{node.image.credit}</figcaption>
+                </figure>
+              )}
+              <div class="timeline__footer">
+                <span class="timeline__sources">
+                  {node.sources.map((s) => (
+                    <a class="timeline__source-link" href={`#ref-${s}`}>
+                      [{s}]
+                    </a>
+                  ))}
+                </span>
+                <span class="timeline__links">
+                  {node.links.map((l) => (
+                    <a href={l.url} target="_blank" rel="noopener">
+                      {l.label} ↗
+                    </a>
+                  ))}
+                </span>
+              </div>
             </div>
-          </div>
-        </li>
-      ))
-    }
-  </ol>
+          </li>
+        ))
+      }
+    </ol>
+  </details>
 </div>
 
 <style>
-  .timeline {
+  .industry-timeline {
     margin: 2rem 0;
   }
 
+  /* ===== 折叠容器 ===== */
+  .timeline__details {
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-bg-subtle);
+    padding: 0 1.1rem;
+  }
+
+  .timeline__details[open] {
+    padding-bottom: 0.75rem;
+  }
+
+  .timeline__details summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.95rem 0.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.95rem;
+    user-select: none;
+    list-style: none;
+  }
+
+  .timeline__details summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .timeline__details summary:hover .timeline__summary-title {
+    color: var(--color-accent);
+  }
+
+  .timeline__details[open] summary {
+    border-bottom: 1px dashed var(--color-border);
+    margin-bottom: 1rem;
+  }
+
+  .timeline__summary-hint {
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    white-space: nowrap;
+  }
+
+  .timeline__summary-hint--close {
+    display: none;
+  }
+
+  .timeline__details[open] .timeline__summary-hint--open {
+    display: none;
+  }
+
+  .timeline__details[open] .timeline__summary-hint--close {
+    display: inline;
+  }
+
+  /* ===== 图例 ===== */
   .timeline__legend {
     display: flex;
     justify-content: center;
@@ -79,6 +156,7 @@ const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
     color: #0e7490;
   }
 
+  /* ===== 节点列表 ===== */
   .timeline__list {
     list-style: none;
     margin: 0;
@@ -136,7 +214,7 @@ const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
   }
 
   .timeline__card {
-    background: var(--color-bg-subtle);
+    background: var(--color-bg);
     border: 1px solid var(--color-border);
     border-radius: 10px;
     padding: 1rem 1.1rem;
@@ -202,9 +280,22 @@ const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
     align-items: flex-start;
   }
 
+  /* 引用角标：点击跳转到文末对应参考条目 */
   .timeline__sources {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+  }
+
+  .timeline__source-link {
     font-family: var(--font-mono);
+    font-size: 0.78rem;
     color: var(--color-text-muted);
+  }
+
+  .timeline__source-link:hover {
+    color: var(--color-accent);
+    text-decoration: none;
   }
 
   .timeline__links {
@@ -219,6 +310,10 @@ const sorted = [...nodes].sort((a, b) => a.date.localeCompare(b.date));
 
   /* 移动端：折叠为单列，轴线靠左 */
   @media (max-width: 719px) {
+    .timeline__details {
+      padding: 0 0.75rem;
+    }
+
     .timeline__list::before {
       left: 8px;
       transform: none;

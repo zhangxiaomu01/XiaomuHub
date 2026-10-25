@@ -709,6 +709,23 @@ a.tag:hover {
   gap: 1rem;
 }
 
+/* ===== 引用角标跳转（行业调研等长文） ===== */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 跳转目标不被顶部内容贴边遮挡 */
+span[id^='ref-'] {
+  scroll-margin-top: 1.5rem;
+}
+
+/* 被 [Sxx] 角标命中的参考条目高亮 */
+li:has(> span[id^='ref-']:target) {
+  background: var(--color-bg-subtle);
+  border-radius: 6px;
+  outline: 1px dashed var(--color-border);
+}
+
 /* ===== 移动端适配 ===== */
 @media (max-width: 640px) {
   main {

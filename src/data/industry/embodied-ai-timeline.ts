@@ -11,6 +11,19 @@ import geminiRoboticsImg from '../../assets/industry/embodied-ai/gemini-robotics
 import unitreeH1Img from '../../assets/industry/embodied-ai/unitree-h1.png';
 import agilityDigitImg from '../../assets/industry/embodied-ai/agility-digit.jpg';
 import agibotA2Img from '../../assets/industry/embodied-ai/agibot-a2.png';
+import dqnImg from '../../assets/industry/embodied-ai/dqn.webp';
+import dactylImg from '../../assets/industry/embodied-ai/dactyl.jpg';
+import saycanImg from '../../assets/industry/embodied-ai/saycan.png';
+import diffusionPolicyImg from '../../assets/industry/embodied-ai/diffusion-policy.png';
+import rt2Img from '../../assets/industry/embodied-ai/rt-2.webp';
+import openXImg from '../../assets/industry/embodied-ai/open-x-embodiment.png';
+import openvlaImg from '../../assets/industry/embodied-ai/openvla.jpg';
+import pi0Img from '../../assets/industry/embodied-ai/pi-0.png';
+import pi05Img from '../../assets/industry/embodied-ai/pi-05.png';
+import pistar06Img from '../../assets/industry/embodied-ai/pistar-06.png';
+import genie3Img from '../../assets/industry/embodied-ai/genie-3.webp';
+import walkerSImg from '../../assets/industry/embodied-ai/walker-s.png';
+import scalePhysicalAiImg from '../../assets/industry/embodied-ai/scale-physical-ai.jpg';
 
 export interface TimelineNode {
   /** 事件日期（YYYY / YYYY-MM / YYYY-MM-DD），用于排序与展示 */
@@ -41,6 +54,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'DQN：深度强化学习起点',
     summary:
       'DeepMind 发表 DQN（Deep Q-Network），首次用卷积网络直接从像素输入学习控制策略，在 Atari 游戏上达到人类水平。它验证了「神经网络端到端输出动作」这条路线的可行性，是后来机器人学习的技术源头之一。',
+    image: {
+      src: dqnImg,
+      alt: 'DeepMind 深度强化学习在 Atari 游戏上的表现',
+      credit: '图片来源：Google DeepMind 官方博客',
+    },
     links: [{ label: 'arXiv:1312.5602', url: 'https://arxiv.org/abs/1312.5602' }],
     sources: ['S01'],
   },
@@ -59,6 +77,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'OpenAI Dactyl 灵巧手',
     summary:
       'OpenAI 用域随机化 + 强化学习在纯仿真环境中训练 Shadow Hand 做物体重定向，零真机微调直接迁移到实体机器人。它证明了 sim-to-real 可以处理高自由度灵巧操作任务。',
+    image: {
+      src: dactylImg,
+      alt: 'OpenAI Dactyl 灵巧手操控方块',
+      credit: '图片来源：OpenAI 官方博客',
+    },
     links: [{ label: 'arXiv:1808.00177', url: 'https://arxiv.org/abs/1808.00177' }],
     sources: ['S03'],
   },
@@ -68,6 +91,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'SayCan：LLM 接地到机器人',
     summary:
       'Google 提出 SayCan：用大语言模型提出候选动作，再用预训练技能的价值函数判断「物理上可执行」，二者相乘选出下一步。它是「LLM 做规划、机器人策略做执行」分层的代表工作。',
+    image: {
+      src: saycanImg,
+      alt: 'SayCan：语言模型与机器人技能结合的演示',
+      credit: '图片来源：Google Research「SayCan」项目页',
+    },
     links: [{ label: 'arXiv:2204.01691', url: 'https://arxiv.org/abs/2204.01691' }],
     sources: ['S04'],
   },
@@ -86,6 +114,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Diffusion Policy：扩散策略',
     summary:
       '哥大/丰田研究院提出把视觉运动策略建模为条件扩散去噪过程，擅长表达多模态动作分布，在推、抓、倒水等任务上显著超过当时方法。扩散策略成为机器人领域被广泛采用的策略表示之一。',
+    image: {
+      src: diffusionPolicyImg,
+      alt: 'Diffusion Policy 策略生成过程可视化',
+      credit: '图片来源：Diffusion Policy 项目页（哥伦比亚大学）',
+    },
     links: [{ label: 'arXiv:2303.04137', url: 'https://arxiv.org/abs/2303.04137' }],
     sources: ['S06'],
   },
@@ -95,6 +128,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'RT-2：VLA 范式确立',
     summary:
       'Google DeepMind 的 RT-2 把动作离散化为 token，与视觉-语言模型（VLM）联合训练，首次把网络知识与机器人控制接通，并正式命名 Vision-Language-Action（VLA）模型。「VLA」自此成为具身大脑的主流技术路线。',
+    image: {
+      src: rt2Img,
+      alt: 'RT-2 视觉-语言-动作模型架构示意',
+      credit: '图片来源：Google DeepMind 官方博客',
+    },
     links: [{ label: 'arXiv:2307.15818', url: 'https://arxiv.org/abs/2307.15818' }],
     sources: ['S07'],
   },
@@ -104,6 +142,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Open X-Embodiment 数据集',
     summary:
       '21 家机构把 22 种机器人的 100 万+ 轨迹汇成 Open X-Embodiment 数据集，训练出的 RT-X 策略在多个本体上超过各自单机训练的基线。跨本体数据共享首次被大规模验证。',
+    image: {
+      src: openXImg,
+      alt: 'Open X-Embodiment 跨本体机器人数据集示意',
+      credit: '图片来源：Open X-Embodiment 项目页',
+    },
     links: [{ label: 'arXiv:2310.08864', url: 'https://arxiv.org/abs/2310.08864' }],
     sources: ['S08'],
   },
@@ -113,6 +156,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'OpenVLA：开源 VLA',
     summary:
       '斯坦福等机构发布 7B 参数开源 VLA 模型 OpenVLA，在 97 万条真机演示（Open X-Embodiment）上训练，多项评测超过闭源 RT-2-X，并放出了全部权重与训练流程。开源社区自此有了可复现的 VLA 基线。',
+    image: {
+      src: openvlaImg,
+      alt: 'OpenVLA 开源视觉-语言-动作模型',
+      credit: '图片来源：OpenVLA 项目页（斯坦福 / UC Berkeley）',
+    },
     links: [{ label: 'arXiv:2406.09246', url: 'https://arxiv.org/abs/2406.09246' }],
     sources: ['S09'],
   },
@@ -122,6 +170,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'π0：流匹配动作专家',
     summary:
       'Physical Intelligence 发布 π0：在开源 VLM 上叠加流匹配（flow matching）动作专家，支持灵巧操作等高频率精细控制，在多平台机器人上通用。流匹配自此与扩散策略并列为主流动作生成方式。',
+    image: {
+      src: pi0Img,
+      alt: 'Physical Intelligence π0 机器人基础模型',
+      credit: '图片来源：Physical Intelligence 官方博客',
+    },
     links: [{ label: 'arXiv:2410.24164', url: 'https://arxiv.org/abs/2410.24164' }],
     sources: ['S10'],
   },
@@ -169,6 +222,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'π0.5：开放世界泛化',
     summary:
       'Physical Intelligence 发布 π0.5：用多机器人真机数据 + 互联网图文数据协同训练，演示了跨本体迁移与未经专门训练的开放世界任务（如整理桌面、做早餐）。它把「网络知识如何进入机器人策略」推进了一步。',
+    image: {
+      src: pi05Img,
+      alt: 'Physical Intelligence π0.5 模型演示',
+      credit: '图片来源：Physical Intelligence 官方博客',
+    },
     links: [{ label: 'arXiv:2504.16054', url: 'https://arxiv.org/abs/2504.16054' }],
     sources: ['S11'],
   },
@@ -178,6 +236,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Genie 3：交互式世界模型',
     summary:
       'Google DeepMind 发布 Genie 3 世界模型：从文本生成可实时交互的 3D 世界，明确目标是作为智能体训练环境。世界模型被普遍视为缓解真机数据瓶颈的候选路线。',
+    image: {
+      src: genie3Img,
+      alt: 'Genie 3 生成的可交互世界画面',
+      credit: '图片来源：Google DeepMind 官方博客',
+    },
     links: [
       {
         label: 'DeepMind 官方博客',
@@ -192,6 +255,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'π*0.6：真机强化学习回归',
     summary:
       'Physical Intelligence 发布 π*0.6，提出 RECAP 方法：先大规模预训练，再用真机强化学习在后训练阶段持续改进。官方称困难任务上的单位时间吞吐量较 π0 提升约一倍。「预训练 + 真机 RL 后训练」成为新范式候选。',
+    image: {
+      src: pistar06Img,
+      alt: 'Physical Intelligence π*0.6 与 RECAP 训练方法',
+      credit: '图片来源：Physical Intelligence 官方博客',
+    },
     links: [{ label: 'Physical Intelligence 博客', url: 'https://www.pi.website/blog/pistar06' }],
     sources: ['S12'],
   },
@@ -287,6 +355,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: '优必选 Walker S 进车厂实训',
     summary:
       '优必选 Walker S 进入蔚来总装车间开展实训，执行质检、贴标等任务，是首批进入汽车工厂的人形机器人之一（官方方案页未标注起始日期，2 月时间点来自媒体报道）。工业制造自此成为人形机器人最重要的落地叙事。',
+    image: {
+      src: walkerSImg,
+      alt: '优必选 Walker S 系列人形机器人',
+      credit: '图片来源：优必选科技官网',
+    },
     links: [{ label: '优必选官网方案页', url: 'https://www.ubtrobot.com/cn/humanoid/solutions' }],
     sources: ['S21'],
   },
@@ -347,6 +420,11 @@ export const embodiedAiTimeline: TimelineNode[] = [
     title: 'Scale AI 发力 Physical AI 数据',
     summary:
       'Scale AI 官宣扩展 Physical AI 数据引擎，为 Physical Intelligence 等客户提供机器人数据服务，称已交付 10 万+ 小时生产数据。「数据即服务」成为具身智能产业链中独立成形的商业化环节。',
+    image: {
+      src: scalePhysicalAiImg,
+      alt: 'Scale AI Physical AI 数据引擎',
+      credit: '图片来源：Scale AI 官方博客',
+    },
     links: [{ label: 'Scale 官方博客', url: 'https://scale.com/blog/physical-ai' }],
     sources: ['S29'],
   },
