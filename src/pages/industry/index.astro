@@ -1,0 +1,34 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import IndustryCard from '../../components/IndustryCard.astro';
+
+// 全部调研文章，按发布时间倒序
+const posts = (await getCollection('industry', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+// 按行业分组：按「组内最新文章时间」决定行业展示顺序
+const industries = [...new Set(posts.map((p) => p.data.industry))];
+const groups = industries.map((name) => ({
+  name,
+  posts: posts.filter((p) => p.data.industry === name),
+}));
+---
+
+<BaseLayout title="行业 · XiaomuHub" description="张小木的行业调研笔记：具身智能等领域的产业链、技术路线与玩家图谱">
+  <div class="page-header">
+    <h1>行业</h1>
+    <p class="page-description">行业调研笔记：产业链拆解、技术路线、玩家图谱与商业化观察。</p>
+  </div>
+
+  {
+    groups.map((group) => (
+      <section>
+        <h2 class="group-title">{group.name}</h2>
+        {group.posts.map((post) => (
+          <IndustryCard post={post} />
+        ))}
+      </section>
+    ))
+  }
+</BaseLayout>

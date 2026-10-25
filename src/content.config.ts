@@ -36,4 +36,19 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { blog, projects };
+// 行业调研集合：src/content/industry/*.md
+const industry = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/industry' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    // 所属行业，如「具身智能」
+    industry: z.string(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { blog, projects, industry };
